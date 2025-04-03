@@ -1,0 +1,75 @@
+.container {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+  font-family: "Poppins";
+}
+.mainContainer {
+  justify-self: center;
+  background-color: white;
+  width: 125vh;
+  height: 75vh;
+  padding: 20px 40px 0 40px;
+  margin-top: 50px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+.userIcon {
+  height: 80px;
+  margin-top: 3px;
+}
+
+.leftHeader p {
+  margin-top: 35px;
+  font-size: 18px;
+  margin-left: 20px;
+  line-height: 20px;
+}
+.rightHeader {
+  margin-top: 40px;
+}
+.upperContainer {
+  margin-bottom: -15px;
+}
+.table {
+  font-size: 16px;
+}
+.date {
+  width: 175px;
+}
+.monthYear {
+  width: 120px;
+}
+.description {
+  width: 280px;
+}
+.title {
+  width: 175px;
+}
+.filename {
+  width: 175px;
+}
+.editIcon {
+  color: #fff;
+  background-color: #1b91e1;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.editIcon:hover {
+  opacity: 0.5;
+}
+
+.deleteIcon {
+  color: #fff;
+  background-color: #e7495c;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.deleteIcon:hover {
+  opacity: 0.5;
+}

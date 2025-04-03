@@ -1,0 +1,115 @@
+.loginContainer {
+  font-family: "Poppins";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  background-color: white;
+  border-radius: 8;
+  border: solid 1;
+}
+
+.centered-div {
+  width: 550px;
+  height: 650px;
+  border-radius: 20px;
+  background-color: white;
+  color: white;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 70px 20px 70px;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.05), 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loginTitle {
+  color: #e7495c;
+  font-family: "Poppins";
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.logoText {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  color: #1e1e1e;
+  font-size: 3.5rem;
+  font-weight: 800;
+}
+.inputLabelEmail {
+  color: #1e1e1e;
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.inputLabelPassword {
+  color: #1e1e1e;
+  font-size: 18px;
+  font-weight: 300;
+
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.loginInput {
+  width: 410px;
+  font-weight: 300;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 15px 20px 15px 20px;
+  border: none;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.05);
+  z-index: 0;
+}
+
+.loginInputInner {
+  position: absolute;
+  width: 410px;
+  font-weight: 300;
+  border-radius: 6px;
+  font-size: 18px;
+  border: none;
+  padding: 15px 20px 15px 20px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.05);
+  z-index: 0;
+}
+
+.inputContainer {
+  text-align: left;
+}
+
+.loginButtonContainer {
+  background-image: linear-gradient(to right, #1b91e1, #3ebfd2);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.05);
+  margin-top: 100px;
+  border-radius: 100px;
+  transition: opacity 0.1s ease-in-out 0.1s;
+}
+.loginButtonContainer:hover {
+  opacity: 0.3;
+  cursor: "pointer";
+}
+
+.loginBtn {
+  padding: 15px 15px 10px 15px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.togglePasswordButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.togglePasswordButton:hover {
+  color: #007bff;
+}
+
+.eye {
+  color: #a3a3a3;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 370px;
+}

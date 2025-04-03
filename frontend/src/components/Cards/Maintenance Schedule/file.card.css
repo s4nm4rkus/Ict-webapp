@@ -1,0 +1,43 @@
+.cardContainer {
+  width: 100%;
+  height: 100px;
+  align-content: center;
+  background-color: white;
+  border-radius: 5px;
+  padding: 25px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.05);
+}
+.fileIcon {
+  height: 62px;
+  align-self: center;
+}
+.leftSide {
+  align-content: center;
+}
+.cardContent {
+  padding: 0;
+  margin: 0;
+  align-self: center;
+  align-content: center;
+  height: 100%;
+}
+.viewFileBtnContainer {
+  background-image: linear-gradient(to right, #1b91e1, #3ebfd2);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.05);
+  border-radius: 100px;
+  transition: opacity 0.1s ease-in-out 0.1s;
+}
+
+.viewFileBtnContainer:hover {
+  opacity: 0.3;
+}
+
+.viewFileBtn {
+  margin: 0;
+  padding: 6px;
+  font-weight: 400;
+  font-size: 18px;
+}
+.rightSide {
+  align-content: center;
+}
