@@ -1,83 +1,18 @@
 import React, { useState } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./uploadfile.css";
+import SuccessModal from "./Done Upload/success.upload";
 
 function FileUploadModal({ show, handleClose }) {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
-  // const handleUpload = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!file || !title || !description) {
-  //     alert("Please fill all required fields.");
-  //     return;
-  //   }
-
-  //   setUploading(true);
-
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("upload_preset", "my_preset"); // Ensure it's an unsigned preset
-  //   formData.append("resource_type", "auto"); // Auto type, handles all file types
-  //   formData.append("title", title); // Adding title
-  //   formData.append("description", description); // Adding description
-  //   formData.append("timestamp", new Date().toISOString()); // Adding the timestamp
-
-  //   try {
-  //     const cloudinaryRes = await fetch(
-  //       "https://api.cloudinary.com/v1_1/dfjqx87qg/upload", // Cloudinary upload URL
-  //       {
-  //         method: "POST",
-  //         body: formData,
-  //       }
-  //     );
-
-  //     if (!cloudinaryRes.ok) {
-  //       throw new Error(`Cloudinary Error: ${cloudinaryRes.statusText}`);
-  //     }
-
-  //     const cloudinaryData = await cloudinaryRes.json();
-
-  //     if (!cloudinaryData.secure_url) {
-  //       throw new Error("Cloudinary upload failed");
-  //     }
-
-  //     // After Cloudinary upload, send data (title, description, timestamp, file URL) to backend
-  //     const fileData = {
-  //       title,
-  //       description,
-  //       timestamp: new Date().toISOString(),
-  //       fileUrl: cloudinaryData.secure_url,
-  //     };
-
-  //     // Sending file metadata to the backend
-  //     const response = await fetch("http://localhost:5000/api/upload", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(fileData),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to save file data in DB");
-  //     }
-
-  //     alert("File uploaded and data saved successfully!");
-  //   } catch (error) {
-  //     console.error("Error uploading file:", error);
-  //     alert("File upload failed. Check console for details.");
-  //   } finally {
-  //     setUploading(false);
-  //   }
-  // };
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -131,8 +66,13 @@ function FileUploadModal({ show, handleClose }) {
       if (!dbResponse.ok) {
         throw new Error(`Database Error: ${dbResponse.statusText}`);
       }
-
-      alert("File uploaded and saved successfully!");
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 4000);
+      setTimeout(() => {
+        handleClose();
+      }, 2800);
     } catch (error) {
       console.error("Error uploading file:", error);
       alert("File upload failed. Check console for details.");
@@ -236,6 +176,10 @@ function FileUploadModal({ show, handleClose }) {
                 </p>
               </button>
             </div>
+
+            {showSuccess && (
+              <SuccessModal onClose={() => setShowSuccess(false)} />
+            )}
           </div>
         </div>
       </div>
