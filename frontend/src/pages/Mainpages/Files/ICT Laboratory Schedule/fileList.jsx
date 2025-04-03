@@ -6,7 +6,7 @@ import "./filelist.css";
 // import axios from "axios";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
-import FileUploadModal from "../../../../components/Modals/Upload Files/uploadFile";
+import FileUploadModal from "../../../../components/Modals/Upload Files/ICT Lab Schedules/uploadFile";
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 

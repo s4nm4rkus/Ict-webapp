@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
-import { uploadFile } from "../controllers/file.controller.js";
+import { uploadFile_ICTLabSchedule } from "../controllers/file.controller.js";
 
 const router = express.Router();
 
-router.post("/upload", uploadFile);
+router.post("/upload/ict-laboratory-schedule", uploadFile_ICTLabSchedule);
 
 export default router;

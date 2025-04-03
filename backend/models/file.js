@@ -8,6 +8,6 @@ const fileSchema = new mongoose.Schema({
 });
 
 // Ensure correct export of the model
-const File = mongoose.model("File", fileSchema);
+const Files_ICTLabSchedule = mongoose.model("Files_ICTLabSchedule", fileSchema);
 
-export default File;
+export default Files_ICTLabSchedule;

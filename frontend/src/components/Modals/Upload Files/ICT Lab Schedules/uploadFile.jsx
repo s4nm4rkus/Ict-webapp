@@ -57,11 +57,14 @@ function FileUploadModal({ show, handleClose }) {
         fileUrl: cloudinaryData.secure_url, // Save the Cloudinary URL
       };
 
-      const dbResponse = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(fileData),
-      });
+      const dbResponse = await fetch(
+        "http://localhost:5000/api/upload/ict-laboratory-schedule",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(fileData),
+        }
+      );
 
       if (!dbResponse.ok) {
         throw new Error(`Database Error: ${dbResponse.statusText}`);
@@ -100,7 +103,7 @@ function FileUploadModal({ show, handleClose }) {
             <hr style={{ marginTop: 5, borderColor: "red", borderWidth: 2 }} />
 
             <h5 style={{ fontSize: "20px", fontWeight: 400 }}>
-              Maintenance Schedule
+              ICT Laboratory Schedule
             </h5>
 
             {/* Title Input */}
