@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../../../components/Nav/navbar";
-// import CardFile from "../../../../components/Cards/ICT Laboratory Schedule/fileCard";
-
 import "./filelist.css";
-// import axios from "axios";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
 import FileUploadModal from "../../../../components/Modals/Upload Files/ICT Lab Schedules/uploadFile";
@@ -11,10 +8,57 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function FileListLS() {
+  const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleFileUploaded = (newFile) => {
+    setFiles((prevFiles) => [...prevFiles, newFile]); // Adds the new file to the list
+  };
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/files/ict-laboratory-schedule",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure you're passing the token
+            },
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        setFiles(data.files);
+      } catch (error) {
+        console.error("Error fetching files:", error);
+        alert("Failed to load files");
+      }
+    };
+
+    fetchFiles();
+  }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const sortedFiles = files
+    .slice()
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  const currentFiles = sortedFiles.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(files.length / itemsPerPage);
+
   return (
     <>
       <Navbar />
@@ -53,6 +97,8 @@ function FileListLS() {
                     border: "none",
                     width: "160px",
                     color: "white",
+                    marginTop: -20,
+                    marginBottom: 10,
                   }}
                 >
                   <p style={{ fontWeight: "500" }} className="viewFileBtn ">
@@ -63,7 +109,7 @@ function FileListLS() {
                     ></i>
                   </p>
                 </button>
-                <FileUploadModal />
+                <FileUploadModal onFileUploaded={handleFileUploaded} />
               </div>
             </div>
           </div>
@@ -154,66 +200,132 @@ function FileListLS() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="date">03/19/2025 3:16 pm</td>
-                  <td className="title">Sample Title</td>
-                  <td className="description">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </td>
-                  <td className="monthYear">March 2025</td>
-                  <td className="filename">filename.docx</td>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      justifyContent: "center",
-                      alignContent: "center",
-                    }}
-                  >
-                    <div class="dropdown-center">
-                      <button
-                        style={{
-                          fontSize: 25,
-                          padding: 0,
-                          border: 0,
-                        }}
-                        class="btn dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      ></button>
-                      <ul
-                        style={{
-                          marginTop: "-20px",
-                          paddingTop: 20,
-                          paddingBottom: 20,
-                          paddingRight: 25,
-                          paddingLeft: 25,
-                          textAlign: "center",
-                          justifyContent: "center",
-                        }}
-                        class="dropdown-menu "
+                {currentFiles.map((file, index) => (
+                  <tr>
+                    <td className="date" style={{ textAlign: "center" }}>
+                      {new Date(file.timestamp).toLocaleString()}
+                    </td>
+                    <td className="title">{file.title}</td>
+                    <td className="description">{file.description}</td>
+                    <td className="monthYear">
+                      {new Date(file.timestamp).toLocaleString("default", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td className="filename">
+                      {" "}
+                      <a
+                        href={file.fileUrl}
+                        download={file.originalFileName}
+                        style={{ color: "#1B91E1" }}
                       >
-                        <div
+                        {file.originalFileName}{" "}
+                      </a>
+                    </td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        justifyContent: "center",
+                        alignContent: "center",
+                      }}
+                    >
+                      <div class="dropdown-center">
+                        <button
                           style={{
-                            display: "flex",
-                            textAlign: "center",
-                            justifyContent: "space-between",
+                            fontSize: 25,
+                            padding: 0,
+                            border: 0,
                           }}
+                          class="btn dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        ></button>
+                        <ul
+                          style={{
+                            marginTop: "-20px",
+                            paddingTop: 15,
+                            paddingBottom: 15,
+                            paddingRight: 30,
+                            paddingLeft: 30,
+                            textAlign: "center",
+                            justifyContent: "center",
+                          }}
+                          class="dropdown-menu "
                         >
-                          <li>
-                            <i className="fas fa-edit fs-5 editIcon"></i>
-                          </li>
-                          <li>
-                            <i className="fas fa-trash fs-5 deleteIcon"></i>
-                          </li>
-                        </div>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
+                          <div
+                            style={{
+                              display: "flex",
+                              textAlign: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <li>
+                              <i className="fas fa-edit fs-5 editIcon"></i>
+                            </li>
+                            <li>
+                              <i className="fas fa-trash fs-5 deleteIcon"></i>
+                            </li>
+                          </div>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                marginTop: 30,
+              }}
+            >
+              <nav>
+                <ul className="pagination">
+                  <li
+                    className={`page-item ${currentPage === 1 && "disabled"}`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  {[...Array(totalPages)].map((_, idx) => (
+                    <li
+                      key={idx}
+                      className={`page-item ${
+                        currentPage === idx + 1 ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(idx + 1)}
+                      >
+                        {idx + 1}
+                      </button>
+                    </li>
+                  ))}
+                  <li
+                    className={`page-item ${
+                      currentPage === totalPages && "disabled"
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             <FileUploadModal show={showModal} handleClose={handleCloseModal} />
           </div>
         </div>

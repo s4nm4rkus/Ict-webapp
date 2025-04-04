@@ -59,7 +59,7 @@ function Homepage() {
                     src={userIcon}
                     alt="Background-image"
                   />
-                  <div className="leftHeader">
+                  <div className="leftHomeHeader">
                     <p>ICT Coordinator</p>
                     <p style={{ fontWeight: 600, fontSize: "24px" }}>
                       {user.firstName} {""} {user.lastName}
@@ -74,7 +74,7 @@ function Homepage() {
                   </div>
                 </div>
 
-                <div className="rightHeader">
+                <div className="rightHomeHeader">
                   <p
                     style={{
                       fontWeight: 600,

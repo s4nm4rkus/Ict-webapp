@@ -9,7 +9,7 @@
   justify-self: center;
   background-color: white;
   width: 125vh;
-  height: 75vh;
+  min-height: 75vh;
   padding: 20px 40px 0 40px;
   margin-top: 50px;
   border-radius: 20px;
@@ -19,13 +19,13 @@
   height: 100px;
 }
 
-.leftHeader p {
+.leftHomeHeader p {
   margin-top: 10px;
   font-size: 18px;
   margin-left: 20px;
   line-height: 20px;
 }
-.rightHeader {
+.rightHomeHeader {
   margin-top: 65px;
 }
 .upperContainer {

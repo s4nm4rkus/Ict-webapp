@@ -3,7 +3,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./uploadfile.css";
 import SuccessModal from "./Done Upload/success.upload";
 
-function FileUploadModal({ show, handleClose }) {
+function FileUploadModal({ show, handleClose, onFileUploaded }) {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -54,14 +54,18 @@ function FileUploadModal({ show, handleClose }) {
         title,
         description,
         timestamp: new Date(),
-        fileUrl: cloudinaryData.secure_url, // Save the Cloudinary URL
+        fileUrl: cloudinaryData.secure_url,
+        originalFileName: file.name, // Save the Cloudinary URL
       };
 
       const dbResponse = await fetch(
         "http://localhost:5000/api/upload/ict-laboratory-schedule",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
           body: JSON.stringify(fileData),
         }
       );
@@ -69,12 +73,18 @@ function FileUploadModal({ show, handleClose }) {
       if (!dbResponse.ok) {
         throw new Error(`Database Error: ${dbResponse.statusText}`);
       }
+      if (onFileUploaded) {
+        onFileUploaded(fileData);
+      }
+
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
       }, 4000);
+
       setTimeout(() => {
-        handleClose();
+        handleClose(); // Close modal
+        window.location.reload(); // Refresh page after closing
       }, 2800);
     } catch (error) {
       console.error("Error uploading file:", error);

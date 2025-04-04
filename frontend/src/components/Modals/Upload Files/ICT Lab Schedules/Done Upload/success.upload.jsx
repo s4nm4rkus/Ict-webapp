@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 function SuccessModal({ onClose }) {
+  const animationRef = useRef(null);
   return (
     <div
       className="successContainer"
@@ -25,6 +26,12 @@ function SuccessModal({ onClose }) {
         <DotLottieReact
           src="https://lottie.host/9ff92c08-afc7-4bd5-b426-3f1b57a235b6/CDUPi4MUhJ.lottie"
           autoplay
+          lottieRef={animationRef}
+          onLoad={() => {
+            if (animationRef.current) {
+              animationRef.current.goToAndPlay(50, true);
+            }
+          }}
         />
       </div>
     </div>

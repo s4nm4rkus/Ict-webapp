@@ -9,6 +9,7 @@
 }
 .image_bgBottom {
   position: absolute;
+  position: fixed;
   height: 450px;
   left: 0;
   bottom: 0;
@@ -16,6 +17,7 @@
 }
 .image_bgTop {
   position: absolute;
+  position: fixed;
   height: 500px;
   right: 0;
   top: 0;
