@@ -3,6 +3,7 @@ import Navbar from "../../../../components/Nav/navbar";
 import "./filelist.css";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
+import StatusNoCurrentFile from "../../../../components/Tags/Empty/noCurrentFile";
 import FileUploadModal from "../../../../components/Modals/Upload Files/ICT Lab Schedules/uploadFile";
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -57,6 +58,22 @@ function FileListLS() {
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
   const currentFiles = sortedFiles.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Get the current month and year
+  const currentDate = new Date();
+  const currentMonthYear = `${
+    currentDate.getMonth() + 1
+  }-${currentDate.getFullYear()}`;
+
+  // Filter files that match the current month and year
+  const filteredFiles = files.filter((file) => {
+    const fileDate = new Date(file.timestamp);
+    const fileMonthYear = `${
+      fileDate.getMonth() + 1
+    }-${fileDate.getFullYear()}`;
+    return fileMonthYear === currentMonthYear;
+  });
+
   const totalPages = Math.ceil(files.length / itemsPerPage);
 
   return (
@@ -127,9 +144,13 @@ function FileListLS() {
               >
                 Recent Uploads
               </p>
-              <StatusFilesUpdated />
+              {filteredFiles.length > 0 ? (
+                <StatusFilesUpdated />
+              ) : (
+                <StatusNoCurrentFile /> // Display StatusNoCurrentFile if no files are uploaded for this month
+              )}
             </div>
-            <table class="table table-hover">
+            <table className="table table-hover">
               <thead>
                 <tr>
                   <th
@@ -201,7 +222,7 @@ function FileListLS() {
               </thead>
               <tbody>
                 {currentFiles.map((file, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td className="date" style={{ textAlign: "center" }}>
                       {new Date(file.timestamp).toLocaleString()}
                     </td>
@@ -214,7 +235,6 @@ function FileListLS() {
                       })}
                     </td>
                     <td className="filename">
-                      {" "}
                       <a
                         href={file.fileUrl}
                         download={file.originalFileName}
@@ -230,14 +250,14 @@ function FileListLS() {
                         alignContent: "center",
                       }}
                     >
-                      <div class="dropdown-center">
+                      <div className="dropdown-center">
                         <button
                           style={{
                             fontSize: 25,
                             padding: 0,
                             border: 0,
                           }}
-                          class="btn dropdown-toggle"
+                          className="btn dropdown-toggle"
                           type="button"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
@@ -252,7 +272,7 @@ function FileListLS() {
                             textAlign: "center",
                             justifyContent: "center",
                           }}
-                          class="dropdown-menu "
+                          className="dropdown-menu"
                         >
                           <div
                             style={{

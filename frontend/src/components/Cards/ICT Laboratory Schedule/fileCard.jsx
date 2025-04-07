@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./file.card.css";
 // import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import fileIcon from "../../../assets/Icons/file-ic.png";
 import StatusNoCurrentFile from "../../Tags/Empty/noCurrentFile";
+import StatusFilesUpdated from "../../../components/Tags/Submitted/updated";
 
 function CardFile() {
   const navigate = useNavigate();
+  const [files, setFiles] = useState([]);
+  const currentDate = new Date();
+  const currentMonthYear = `${
+    currentDate.getMonth() + 1
+  }-${currentDate.getFullYear()}`;
 
   const handleViewFiles = () => {
     navigate("/filelistLS"); // Navigate to FileList page
   };
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/files/ict-laboratory-schedule",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        setFiles(data.files);
+      } catch (error) {
+        console.error("Error fetching files:", error);
+      }
+    };
+
+    fetchFiles();
+  }, []);
+
+  // Filter files based on the current month and year
+  const filteredFiles = files.filter((file) => {
+    const fileDate = new Date(file.timestamp);
+    const fileMonthYear = `${
+      fileDate.getMonth() + 1
+    }-${fileDate.getFullYear()}`;
+    return fileMonthYear === currentMonthYear;
+  });
 
   return (
     <div className="cardContainer">
@@ -49,7 +92,11 @@ function CardFile() {
                   ICT Laboratory Schedule
                 </p>
                 <div style={{ marginLeft: "5px" }}>
-                  <StatusNoCurrentFile />
+                  {filteredFiles.length > 0 ? (
+                    <StatusFilesUpdated />
+                  ) : (
+                    <StatusNoCurrentFile />
+                  )}
                 </div>
               </div>
               <p style={{ fontSize: "14px", padding: 0, margin: 0 }}>

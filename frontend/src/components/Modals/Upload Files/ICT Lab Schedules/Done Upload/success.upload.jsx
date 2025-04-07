@@ -10,16 +10,16 @@ function SuccessModal({ onClose }) {
         position: "absolute",
         backgroundColor: "#fff",
         borderRadius: "10px",
+        paddingTop: 50,
         height: "100%",
         width: "100%",
         justifyContent: "center",
-        alignContent: "center",
       }}
     >
       <div
         style={{
-          height: "230px",
-          width: 230,
+          height: "200px",
+          width: 200,
           justifySelf: "center",
         }}
       >
@@ -33,7 +33,20 @@ function SuccessModal({ onClose }) {
             }
           }}
         />
+        <p style={{ fontSize: 34, fontWeight: 600, textAlign: "center" }}>
+          Uploaded
+        </p>
       </div>
+      <p
+        style={{
+          fontSize: 18,
+          marginTop: 60,
+          fontWeight: 300,
+          textAlign: "center",
+        }}
+      >
+        File uploaded successfully!
+      </p>
     </div>
   );
 }

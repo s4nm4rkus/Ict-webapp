@@ -7,7 +7,7 @@ function StatusNoCurrentFile() {
   return (
     <div className="tagContainer">
       <p className="nocurrentfilText">
-        No Current File <i className="fas fa-exclamation-circle ps-1"></i>
+        Outdated <i className="fas fa-exclamation-circle ps-1"></i>
       </p>
     </div>
   );
