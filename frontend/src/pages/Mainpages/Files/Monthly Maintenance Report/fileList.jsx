@@ -4,11 +4,11 @@ import "./filelist.css";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
 import StatusNoCurrentFile from "../../../../components/Tags/Empty/noCurrentFile";
-import FileUploadModal from "../../../../components/Modals/Upload Files/ICT Lab Schedules/uploadFile";
+import FileUploadModal from "../../../../components/Modals/Upload Files/Monthly Maintenance Report/uploadFile";
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-function FileListLS() {
+function FileListMMS() {
   const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -26,7 +26,7 @@ function FileListLS() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/files/ict-laboratory-schedule",
+          "http://localhost:5000/api/files/monthly-maintenance-report",
           {
             method: "GET",
             headers: {
@@ -354,4 +354,4 @@ function FileListLS() {
   );
 }
 
-export default FileListLS;
+export default FileListMMS;

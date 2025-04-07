@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import {
   uploadFile_ICTLabSchedule,
   getFiles_ICTLabSchedule,
+  uploadFile_MonthlyMaintenanceReport,
+  getFiles_MonthlyMaintenanceReport,
 } from "../controllers/file.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
@@ -18,6 +20,18 @@ router.get(
   "/files/ict-laboratory-schedule",
   authMiddleware,
   getFiles_ICTLabSchedule
+);
+
+router.post(
+  "/upload/monthly-maintenance-report",
+  authMiddleware,
+  uploadFile_MonthlyMaintenanceReport
+);
+
+router.get(
+  "/files/monthly-maintenance-report",
+  authMiddleware,
+  getFiles_MonthlyMaintenanceReport
 );
 
 export default router;
