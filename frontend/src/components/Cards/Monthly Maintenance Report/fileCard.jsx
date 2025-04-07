@@ -16,7 +16,7 @@ function CardFile() {
   }-${currentDate.getFullYear()}`;
 
   const handleViewFiles = () => {
-    navigate("/filelistMMS"); // Navigate to FileList page
+    navigate("/filelistMMR"); // Navigate to FileList page
   };
 
   useEffect(() => {

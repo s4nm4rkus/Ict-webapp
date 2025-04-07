@@ -5,7 +5,7 @@ import AuthContext from "./context/AuthContext"; // Use AuthContext (not AuthPro
 import Login from "./pages/Auth/Login";
 import Homepage from "./pages/Mainpages/Home/Homepage";
 import FileListLS from "./pages/Mainpages/Files/ICT Laboratory Schedule/fileList";
-import FileListMMS from "./pages/Mainpages/Files/Monthly Maintenance Report/fileList";
+import FileListMMR from "./pages/Mainpages/Files/Monthly Maintenance Report/fileList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
@@ -32,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<PrivateRoute element={<Homepage />} />} />
         <Route path="/filelistLS" element={<FileListLS />} />
-        <Route path="/filelistMMS" element={<FileListMMS />} />
+        <Route path="/filelistMMR" element={<FileListMMR />} />
         <Route path="/" element={<Login />} />
       </Routes>
     </div>

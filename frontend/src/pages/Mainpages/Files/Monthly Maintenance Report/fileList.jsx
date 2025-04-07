@@ -8,7 +8,7 @@ import FileUploadModal from "../../../../components/Modals/Upload Files/Monthly 
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-function FileListMMS() {
+function FileListMMR() {
   const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -354,4 +354,4 @@ function FileListMMS() {
   );
 }
 
-export default FileListMMS;
+export default FileListMMR;
