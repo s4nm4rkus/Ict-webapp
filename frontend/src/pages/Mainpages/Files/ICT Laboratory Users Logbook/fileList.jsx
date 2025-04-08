@@ -4,11 +4,11 @@ import "./filelist.css";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
 import StatusNoCurrentFile from "../../../../components/Tags/Empty/noCurrentFile";
-import FileUploadModal from "../../../../components/Modals/Upload Files/Monthly Maintenance Report/uploadFile";
+import FileUploadModal from "../../../../components/Modals/Upload Files/ICT Lab Users Logbook/uploadFile";
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-function FileListMMR() {
+function FileListLUL() {
   const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -26,7 +26,7 @@ function FileListMMR() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/files/monthly-maintenance-report",
+          "http://localhost:5000/api/files/ict-laboratory-users-logbook",
           {
             method: "GET",
             headers: {
@@ -96,7 +96,7 @@ function FileListMMR() {
                 />
                 <div className="leftHeader">
                   <p style={{ fontWeight: 600, fontSize: "24px" }}>
-                    Monthly Maintenance Report
+                    ICT Laboratory Users Logbook
                   </p>
                   <p style={{ fontSize: "16px", marginTop: "-7px" }}>
                     to be sent monthly
@@ -354,4 +354,4 @@ function FileListMMR() {
   );
 }
 
-export default FileListMMR;
+export default FileListLUL;

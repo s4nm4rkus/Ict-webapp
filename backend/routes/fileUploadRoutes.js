@@ -5,6 +5,8 @@ import {
   getFiles_ICTLabSchedule,
   uploadFile_MonthlyMaintenanceReport,
   getFiles_MonthlyMaintenanceReport,
+  uploadFile_ICTLabUsersLogbook,
+  getFiles_ICTLabUsersLogbook,
 } from "../controllers/file.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
@@ -32,6 +34,18 @@ router.get(
   "/files/monthly-maintenance-report",
   authMiddleware,
   getFiles_MonthlyMaintenanceReport
+);
+
+router.post(
+  "/upload/ict-laboratory-users-logbook",
+  authMiddleware,
+  uploadFile_ICTLabUsersLogbook
+);
+
+router.get(
+  "/files/ict-laboratory-users-logbook",
+  authMiddleware,
+  getFiles_ICTLabUsersLogbook
 );
 
 export default router;

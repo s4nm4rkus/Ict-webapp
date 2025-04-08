@@ -6,6 +6,7 @@ import Login from "./pages/Auth/Login";
 import Homepage from "./pages/Mainpages/Home/Homepage";
 import FileListLS from "./pages/Mainpages/Files/ICT Laboratory Schedule/fileList";
 import FileListMMR from "./pages/Mainpages/Files/Monthly Maintenance Report/fileList";
+import FileListLUL from "./pages/Mainpages/Files/ICT Laboratory Users Logbook/fileList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/home" element={<PrivateRoute element={<Homepage />} />} />
         <Route path="/filelistLS" element={<FileListLS />} />
         <Route path="/filelistMMR" element={<FileListMMR />} />
+        <Route path="/filelistLUL" element={<FileListLUL />} />
         <Route path="/" element={<Login />} />
       </Routes>
     </div>
