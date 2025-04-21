@@ -9,6 +9,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [level, setLevel] = useState("");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -17,7 +18,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    if (!file || !title || !description) {
+    if (!file || !title || !description || !level) {
       alert("Please fill all required fields.");
       return;
     }
@@ -56,6 +57,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
         timestamp: new Date(),
         fileUrl: cloudinaryData.secure_url,
         originalFileName: file.name, // Save the Cloudinary URL
+        level,
       };
 
       const dbResponse = await fetch(
@@ -111,11 +113,45 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
             </div>
 
             <hr style={{ marginTop: 5, borderColor: "red", borderWidth: 2 }} />
-
-            <h5 style={{ fontSize: "20px", fontWeight: 400 }}>
-              ICT Laboratory Schedule
-            </h5>
-
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h5 style={{ fontSize: "20px", fontWeight: 400 }}>
+                ICT Laboratory Schedule
+              </h5>
+              <div style={{ display: "flex" }}>
+                <h5
+                  style={{ fontSize: "20px", fontWeight: 400, marginRight: 20 }}
+                >
+                  <input
+                    type="radio"
+                    name="fileSelect"
+                    value="Elementary/JHS"
+                    checked={level === "Elementary/JHS"}
+                    onChange={() => setLevel("Elementary/JHS")}
+                    style={{
+                      transform: "scale(1.4)",
+                      cursor: "pointer",
+                      marginRight: 8,
+                    }}
+                  />
+                  Elementary/JHS
+                </h5>
+                <h5 style={{ fontSize: "20px", fontWeight: 400 }}>
+                  <input
+                    type="radio"
+                    name="fileSelect"
+                    value="Senior High School"
+                    checked={level === "Senior High School"}
+                    onChange={() => setLevel("Senior High School")}
+                    style={{
+                      transform: "scale(1.4)",
+                      cursor: "pointer",
+                      marginRight: 8,
+                    }}
+                  />
+                  SHS
+                </h5>
+              </div>
+            </div>
             {/* Title Input */}
             <div className="inputContainer" style={{ marginTop: 10 }}>
               <label htmlFor="fileTitle" className="inputLabelEmail">

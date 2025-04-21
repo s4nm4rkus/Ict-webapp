@@ -54,12 +54,15 @@
 }
 .monthYear {
   font-size: 14px;
-
   width: 120px;
 }
 .description {
   font-size: 14px;
   width: 300px;
+}
+.level {
+  font-size: 14px;
+  width: 100px;
 }
 .title {
   font-size: 14px;

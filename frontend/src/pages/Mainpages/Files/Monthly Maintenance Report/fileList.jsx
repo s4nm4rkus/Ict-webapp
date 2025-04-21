@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../../../components/Nav/navbar";
+import { useNavigate } from "react-router-dom";
 import "./filelist.css";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
@@ -11,12 +12,16 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 function FileListMMR() {
   const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   const handleFileUploaded = (newFile) => {
     setFiles((prevFiles) => [...prevFiles, newFile]); // Adds the new file to the list
@@ -298,10 +303,20 @@ function FileListMMR() {
             <div
               style={{
                 display: "flex",
-                justifyContent: "right",
+                justifyContent: "space-between",
                 marginTop: 30,
               }}
             >
+              <button
+                style={{
+                  border: 0,
+                  backgroundColor: "transparent",
+                  marginTop: -20,
+                }}
+                onClick={handleBack}
+              >
+                <i className="fas fa-arrow-left fs-5 editIcon"></i>
+              </button>
               <nav>
                 <ul className="pagination">
                   <li

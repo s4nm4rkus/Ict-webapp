@@ -4,17 +4,18 @@ import Files_ICTLabUsersLogbook from "../models/Files/file-ict-lab-users-logbook
 
 export const uploadFile_ICTLabSchedule = async (req, res) => {
   try {
-    const { title, description, timestamp, fileUrl, originalFileName } =
+    const { title, description, level, timestamp, fileUrl, originalFileName } =
       req.body;
     const userId = req.user.id;
 
-    if (!title || !description || !fileUrl || !originalFileName) {
+    if (!title || !description || !fileUrl || !originalFileName || !level) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
     const newFile = new Files_ICTLabSchedule({
       title,
       description,
+      level,
       timestamp,
       fileUrl,
       originalFileName,

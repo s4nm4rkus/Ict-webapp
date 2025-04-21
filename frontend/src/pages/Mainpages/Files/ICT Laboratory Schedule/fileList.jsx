@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../../../components/Nav/navbar";
+import { useNavigate } from "react-router-dom";
 import "./filelist.css";
 import fileIcon from "../../../../assets/Icons/file-ic.png";
 import StatusFilesUpdated from "../../../../components/Tags/Submitted/updated";
@@ -11,12 +12,17 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 function FileListLS() {
   const [files, setFiles] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   const handleFileUploaded = (newFile) => {
     setFiles((prevFiles) => [...prevFiles, newFile]); // Adds the new file to the list
@@ -61,21 +67,40 @@ function FileListLS() {
 
   // Get the current month and year
   const currentDate = new Date();
-  const currentMonthYear = `${
-    currentDate.getMonth() + 1
-  }-${currentDate.getFullYear()}`;
 
   // Filter files that match the current month and year
-  const filteredFiles = files.filter((file) => {
-    const fileDate = new Date(file.timestamp);
-    const fileMonthYear = `${
-      fileDate.getMonth() + 1
-    }-${fileDate.getFullYear()}`;
-    return fileMonthYear === currentMonthYear;
-  });
 
   const totalPages = Math.ceil(files.length / itemsPerPage);
 
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth(); // 0 = Jan, …, 5 = June, …, 11 = Dec
+
+  // Elementary/JHS submitted if any file.level === 'elementary/jhs' uploaded in June (month 5) of this year
+  const jhsSubmitted = files.some((file) => {
+    if (file.level !== "Elementary/JHS") return false;
+    const d = new Date(file.timestamp);
+    return d.getFullYear() === currentYear && d.getMonth() === 5;
+  });
+
+  // SHS submitted if any file.level === 'shs' in the current semester:
+  //  - 1st Sem: June (5) → November (10)
+  //  - 2nd Sem: December (11) → May (4)
+  const shsSubmitted = files.some((file) => {
+    if (file.level !== "Senior High School") return false;
+    const d = new Date(file.timestamp);
+    const y = d.getFullYear();
+    const m = d.getMonth();
+
+    if (currentMonth >= 5 && currentMonth <= 10) {
+      // we’re in 1st Sem now
+      return y === currentYear && m >= 5 && m <= 10;
+    } else {
+      // we’re in 2nd Sem now
+      // if month is Dec (11) → May (4):
+      //   Dec belongs to this year, Jan–May belong to this year
+      return y === currentYear && (m >= 11 || m <= 4);
+    }
+  });
   return (
     <>
       <Navbar />
@@ -137,14 +162,43 @@ function FileListLS() {
                 style={{
                   fontSize: 20,
                   fontWeight: 500,
-                  marginRight: 5,
+                  marginRight: 10,
                   marginTop: -3,
                   marginBottom: 8,
                 }}
               >
-                Recent Uploads
+                Recent Uploads:
               </p>
-              {filteredFiles.length > 0 ? (
+              <p
+                style={{
+                  fontSize: 18,
+                  fontWeight: 500,
+                  marginRight: 10,
+                  marginTop: -1,
+                  marginBottom: 8,
+                }}
+              >
+                Elementary/JHS
+              </p>
+              {jhsSubmitted ? (
+                <StatusFilesUpdated />
+              ) : (
+                <StatusNoCurrentFile /> // Display StatusNoCurrentFile if no files are uploaded for this month
+              )}
+
+              <p
+                style={{
+                  fontSize: 18,
+                  fontWeight: 500,
+                  marginRight: 10,
+                  marginLeft: 10,
+                  marginTop: -1,
+                  marginBottom: 8,
+                }}
+              >
+                | Senior High School
+              </p>
+              {shsSubmitted ? (
                 <StatusFilesUpdated />
               ) : (
                 <StatusNoCurrentFile /> // Display StatusNoCurrentFile if no files are uploaded for this month
@@ -204,6 +258,16 @@ function FileListLS() {
                     }}
                     scope="col"
                   >
+                    Level
+                  </th>
+                  <th
+                    style={{
+                      backgroundColor: "#1B91E1",
+                      color: "#FFF",
+                      fontWeight: 600,
+                    }}
+                    scope="col"
+                  >
                     File Name
                   </th>
                   <th
@@ -223,7 +287,10 @@ function FileListLS() {
               <tbody>
                 {currentFiles.map((file, index) => (
                   <tr key={index}>
-                    <td className="date" style={{ textAlign: "center" }}>
+                    <td
+                      className="date"
+                      style={{ textAlign: "center", width: "90px" }}
+                    >
                       {new Date(file.timestamp).toLocaleString()}
                     </td>
                     <td className="title">{file.title}</td>
@@ -234,6 +301,7 @@ function FileListLS() {
                         year: "numeric",
                       })}
                     </td>
+                    <td className="level">{file.level}</td>
                     <td className="filename">
                       <a
                         href={file.fileUrl}
@@ -298,10 +366,20 @@ function FileListLS() {
             <div
               style={{
                 display: "flex",
-                justifyContent: "right",
+                justifyContent: "space-between",
                 marginTop: 30,
               }}
             >
+              <button
+                style={{
+                  border: 0,
+                  backgroundColor: "transparent",
+                  marginTop: -20,
+                }}
+                onClick={handleBack}
+              >
+                <i className="fas fa-arrow-left fs-5 editIcon"></i>
+              </button>
               <nav>
                 <ul className="pagination">
                   <li
