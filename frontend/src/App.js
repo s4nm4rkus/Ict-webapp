@@ -9,6 +9,10 @@ import FileListMMR from "./pages/Mainpages/Files/Monthly Maintenance Report/file
 import FileListLUL from "./pages/Mainpages/Files/ICT Laboratory Users Logbook/fileList";
 import FileListMS from "./pages/Mainpages/Files/Maintenance Schedule/fileList";
 
+// Admin
+
+import AdminDashboard from "./pages/Mainpages/Admin/Admin Dashboard/AdminDashboard.jsx";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
 import bgTopImage from "./assets/Backgrounds/bgTop.svg";
@@ -33,6 +37,15 @@ function App() {
 
       <Routes>
         <Route path="/home" element={<PrivateRoute element={<Homepage />} />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute
+              element={<AdminDashboard />}
+              allowedRoles={["admin"]}
+            />
+          }
+        />
         <Route path="/filelistLS" element={<FileListLS />} />
         <Route path="/filelistMMR" element={<FileListMMR />} />
         <Route path="/filelistLUL" element={<FileListLUL />} />

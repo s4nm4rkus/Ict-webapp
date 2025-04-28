@@ -9,6 +9,7 @@ const {
   register,
   getMe,
   logout,
+  getAllUsers,
 } = require("../controllers/auth.controller.js");
 
 router.post("/register", register);
@@ -18,5 +19,7 @@ router.post("/login", login);
 router.get("/me", authMiddleware, getMe);
 
 router.post("/logout", logout);
+
+router.get("/all", authMiddleware, getAllUsers);
 
 module.exports = router;

@@ -1,0 +1,84 @@
+.mainContainer-admin {
+  justify-self: center;
+  background-color: white;
+  width: 125vh;
+  min-height: 75vh;
+  padding: 0 40px 0 40px;
+  margin-top: 50px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+a {
+  text-decoration: none;
+}
+
+.customTabs {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0 0 0 0;
+}
+
+.tabLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e1e1e;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-bottom: 7px solid transparent;
+  opacity: 0.6;
+  transition: border-color 0.3s, opacity 0.3s;
+}
+
+.tabLink i {
+  padding-bottom: 5px;
+  font-size: 24px;
+  color: inherit;
+}
+
+.tabLink:hover,
+.activeTab {
+  border-bottom: 7px solid #e7495c;
+  opacity: 1;
+}
+
+.tabContainer {
+  padding-top: 20px;
+}
+
+/* Grid container */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* Individual school card */
+.schoolCard {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.schoolCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.schoolCard p {
+  margin: 10px 0;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.contentContainer nav {
+  padding-bottom: 20px;
+  justify-self: right;
+}

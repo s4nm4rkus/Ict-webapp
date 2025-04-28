@@ -14,9 +14,13 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ msg: "Invalid credentials" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.json({
       msg: "Login successful",
@@ -24,6 +28,7 @@ exports.login = async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
+        role: user.role,
         firstName: user.firstName,
         lastName: user.lastName,
         contactNumber: user.contactNumber,
@@ -37,8 +42,15 @@ exports.login = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const { email, password, firstName, lastName, contactNumber, schoolName } =
-    req.body;
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    contactNumber,
+    schoolName,
+    role,
+  } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -53,13 +65,18 @@ exports.register = async (req, res) => {
       lastName,
       contactNumber,
       schoolName,
+      role: role || "user",
     });
 
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.status(201).json({
       msg: "User registered successfully",
@@ -67,6 +84,7 @@ exports.register = async (req, res) => {
       user: {
         id: newUser._id,
         email,
+        role: newUser.role,
         firstName,
         lastName,
         contactNumber,
@@ -91,22 +109,6 @@ exports.getMe = async (req, res) => {
   }
 };
 
-// exports.getCurrentUser = async (req, res) => {
-//   try {
-//     const userId = req.user.id;
-//     const user = await User.findById(userId).select("-password");
-
-//     if (!user) {
-//       return res.status(404).json({ msg: "User not found" });
-//     }
-
-//     res.json(user);
-//   } catch (error) {
-//     console.error("Error fetching current user:", error);
-//     res.status(500).json({ msg: "Server error", error });
-//   }
-// };
-
 exports.logout = async (req, res) => {
   try {
     res.clearCookie("token");
@@ -114,5 +116,16 @@ exports.logout = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Server error", error });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    // fetch everyone except their password
+    const users = await User.find().select("-password");
+    res.status(200).json({ users });
+  } catch (err) {
+    console.error("❌ Error fetching all users:", err);
+    res.status(500).json({ msg: "Server error fetching users" });
   }
 };

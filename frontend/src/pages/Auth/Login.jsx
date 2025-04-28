@@ -15,8 +15,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
-      navigate("/home");
+      const loggedInUser = await login(email, password); // get user
+
+      // Redirect based on role
+      if (loggedInUser.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
     } catch (err) {
       setError("Invalid email or password!");
     }
