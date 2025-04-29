@@ -7,30 +7,10 @@ import "font-awesome/css/font-awesome.min.css";
 import "./schooldata.css";
 
 function SchoolData() {
-  const { userId } = useParams(); // Extract userId from URL
-  const [user, setUser] = useState(null); // Logged-in user
-  const [selectedUser, setSelectedUser] = useState(null); // User to display
+  const { userId } = useParams();
+  const [selectedUser, setSelectedUser] = useState(null);
   const location = useLocation();
-  const passedUser = location.state?.selectedUser; // Get passed user from navigation state
-
-  // Fetch logged-in admin user
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const { data } = await axios.get("http://localhost:5000/api/auth/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(data.user);
-      } catch (error) {
-        console.error(
-          "Error fetching user:",
-          error.response?.data?.msg || error.message
-        );
-      }
-    };
-    fetchUser();
-  }, []);
+  const passedUser = location.state?.selectedUser;
 
   useEffect(() => {
     const fetchSelectedUser = async () => {
@@ -59,7 +39,7 @@ function SchoolData() {
     };
 
     fetchSelectedUser();
-  }, [userId, passedUser]); // Re-run the effect when userId or passedUser changes
+  }, [userId, passedUser]);
 
   return (
     <>
@@ -69,25 +49,14 @@ function SchoolData() {
           <div className="mainContainer">
             <div className="upperContainer">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div style={{ display: "flex" }}>
-                  <img className="userIcon" src={userIcon} alt="User Icon" />
-                  <div className="leftHomeHeader">
-                    <p>ICT Coordinator</p>
-                    <p style={{ fontWeight: 600, fontSize: "24px" }}>
-                      {selectedUser.firstName} {selectedUser.lastName}
-                    </p>
-                    <p style={{ fontSize: "16px", marginTop: "-7px" }}>
-                      <i
-                        className="fa-solid fa-phone pe-1"
-                        style={{ fontSize: "14px" }}
-                      ></i>
-                      +63{selectedUser.contactNumber}
-                    </p>
-                  </div>
-                </div>
-
                 <div className="rightHomeHeader">
-                  <p style={{ fontWeight: 600, fontSize: "24px" }}>
+                  <p
+                    style={{
+                      fontWeight: 600,
+                      fontSize: "24px",
+                      marginBottom: 0,
+                    }}
+                  >
                     <i
                       className="fa-solid fa-school pe-3"
                       style={{ fontSize: "28px", color: "#1e1e1e" }}
@@ -104,7 +73,24 @@ function SchoolData() {
 
             <hr style={{ borderColor: "#E7495C", borderWidth: 3 }} />
 
-            <div className="contentContainer"></div>
+            <div className="contentContainer">
+              <div style={{ display: "flex" }}>
+                <img className="userIcon" src={userIcon} alt="User Icon" />
+                <div className="schoolDataHeader">
+                  <p style={{ fontWeight: 600, fontSize: "20px" }}>
+                    {selectedUser.firstName} {selectedUser.lastName}{" "}
+                    <span style={{ fontWeight: 300 }}>| ICT Coordinator </span>
+                  </p>
+                  <p style={{ fontSize: "16px", marginTop: "-5px" }}>
+                    <i
+                      className="fa-solid fa-phone pe-1"
+                      style={{ fontSize: "14px" }}
+                    ></i>
+                    +63{selectedUser.contactNumber}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (

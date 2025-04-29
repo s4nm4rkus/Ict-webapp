@@ -16,18 +16,15 @@
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15), 0px 0px 1px rgba(0, 0, 0, 0.1);
 }
 .userIcon {
-  height: 100px;
+  height: 50px;
+  margin-top: -3px;
 }
-
-.leftHomeHeader p {
-  margin-top: 10px;
+.schoolDataHeader p {
   font-size: 18px;
   margin-left: 20px;
-  line-height: 20px;
+  margin-top: 10px;
+  line-height: 10px;
 }
 .rightHomeHeader {
-  margin-top: 65px;
-}
-.upperContainer {
-  margin-bottom: -20px;
+  margin-top: 10px;
 }
