@@ -1,7 +1,6 @@
 import Files_ICTLabSchedule from "../models/Files/file-ict-lab-sched.js";
 import Files_MonthlyMaintenanceReport from "../models/Files/file-monthly-maintenance-report.js";
 import Files_ICTLabUsersLogbook from "../models/Files/file-ict-lab-users-logbook.js";
-
 import Files_MaintenanceSchedule from "../models/Files/file-maintenance-sched.js";
 
 export const uploadFile_ICTLabSchedule = async (req, res) => {
@@ -43,7 +42,6 @@ export const getFiles_ICTLabSchedule = async (req, res) => {
   try {
     const userId = req.user.id; // Get the current user ID from the middleware
 
-    // Fetch files where the owner matches the current user ID
     const files = await Files_ICTLabSchedule.find({ owner: userId });
 
     if (!files.length) {

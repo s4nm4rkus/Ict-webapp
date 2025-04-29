@@ -12,6 +12,7 @@ import FileListMS from "./pages/Mainpages/Files/Maintenance Schedule/fileList";
 // Admin
 
 import AdminDashboard from "./pages/Mainpages/Admin/Admin Dashboard/AdminDashboard.jsx";
+import SchoolData from "./pages/Mainpages/Admin/School/SchoolData.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
@@ -46,6 +47,7 @@ function App() {
             />
           }
         />
+        <Route path="/school-data/:id" element={<SchoolData />} />
         <Route path="/filelistLS" element={<FileListLS />} />
         <Route path="/filelistMMR" element={<FileListMMR />} />
         <Route path="/filelistLUL" element={<FileListLUL />} />

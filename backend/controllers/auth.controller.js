@@ -129,3 +129,25 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ msg: "Server error fetching users" });
   }
 };
+
+exports.getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Check if userId is valid
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ msg: "Invalid user ID" });
+    }
+
+    // Proceed with the database query
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    return res.json({ user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(500).json({ msg: "Server error" });
+  }
+};

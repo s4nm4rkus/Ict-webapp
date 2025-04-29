@@ -56,9 +56,6 @@ function AdminDashboard() {
   const indexOfFirstSchool = indexOfLastSchool - itemsPerPage;
   const currentSchools = schools.slice(indexOfFirstSchool, indexOfLastSchool);
 
-  // Handle page changes
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   // Total number of pages
   const totalPages = Math.ceil(schools.length / itemsPerPage);
 
@@ -136,7 +133,13 @@ function AdminDashboard() {
                           textAlign: "center",
                           alignContent: "center",
                         }}
-                        // onClick={() => navigate(`/schoolData/${sch._id}`)}
+                        onClick={() => {
+                          if (sch._id) {
+                            navigate(`/school-data/${sch._id}`, {
+                              state: { selectedUser: sch },
+                            });
+                          }
+                        }}
                       >
                         <i
                           className="fa fa-school"
