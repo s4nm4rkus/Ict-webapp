@@ -10,7 +10,7 @@ export const uploadFile_ICTLabSchedule = async (req, res) => {
       req.body;
     const userId = req.user.id;
 
-    if (!title || !description || !fileUrl || !originalFileName) {
+    if (!title || !description || !fileUrl || !originalFileName || !level) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -21,6 +21,7 @@ export const uploadFile_ICTLabSchedule = async (req, res) => {
       fileUrl,
       originalFileName,
       owner: userId,
+      level,
     });
     await newFile.save();
 

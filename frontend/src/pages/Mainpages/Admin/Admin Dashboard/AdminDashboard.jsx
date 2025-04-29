@@ -136,7 +136,7 @@ function AdminDashboard() {
                           textAlign: "center",
                           alignContent: "center",
                         }}
-                        // onClick={() => navigate(`/school/${sch._id}`)}
+                        // onClick={() => navigate(`/schoolData/${sch._id}`)}
                       >
                         <i
                           className="fa fa-school"
