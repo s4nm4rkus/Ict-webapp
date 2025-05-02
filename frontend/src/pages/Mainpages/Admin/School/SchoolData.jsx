@@ -3,6 +3,11 @@ import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../../../../components/Nav/navbar";
 import axios from "axios";
 import userIcon from "../../../../assets/Icons/user-ic.png";
+import SchoolFileCardICTLS from "./cards/ICT Laboratory Schedule/schoolFileCardICTLS";
+import SchoolFileCardMS from "./cards/Maintenance Schedule/schoolFileCardMS";
+import SchoolFileCardLULB from "./cards/ICT Laboratory Users Log Book/schoolFileCardICTLULB";
+import SchoolFileCardMMR from "./cards/Monthly Maintenance Report/schoolFileCardICTMMR";
+
 import "font-awesome/css/font-awesome.min.css";
 import "./schooldata.css";
 
@@ -58,6 +63,10 @@ function SchoolData() {
                     }}
                   >
                     <i
+                      className="fas fa-arrow-left pe-3"
+                      style={{ fontSize: "26px", color: "#1B91E1" }}
+                    ></i>
+                    <i
                       className="fa-solid fa-school pe-3"
                       style={{ fontSize: "28px", color: "#1e1e1e" }}
                     ></i>
@@ -89,6 +98,33 @@ function SchoolData() {
                     +63{selectedUser.contactNumber}
                   </p>
                 </div>
+              </div>
+              <div className="filesCardsGrid">
+                <SchoolFileCardICTLS
+                  title="ICT Laboratory Schedule"
+                  description="to be sent at the beginning of school year/semester"
+                  apiEndpoint="http://localhost:5000/api/files/ict-laboratory-schedule"
+                  userId={selectedUser?._id}
+                />
+
+                <SchoolFileCardMS
+                  title="Maintenance Schedule"
+                  description="to be sent at the beginning of school year"
+                  apiEndpoint="http://localhost:5000/api/files/maintenance-schedule"
+                  userId={selectedUser?._id}
+                />
+                <SchoolFileCardLULB
+                  title="ICT Laboratory Users Log Book"
+                  description="to be sent monthly"
+                  apiEndpoint="http://localhost:5000/api/files/ict-laboratory-users-log-book"
+                  userId={selectedUser?._id}
+                />
+                <SchoolFileCardMMR
+                  title="Monthly Maintenance Report"
+                  description="to be sent monthly"
+                  apiEndpoint="http://localhost:5000/api/files/monthly-maintenance-report"
+                  userId={selectedUser?._id}
+                />
               </div>
             </div>
           </div>

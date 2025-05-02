@@ -11,6 +11,10 @@ import {
   getFiles_MaintenanceSchedule,
 } from "../controllers/file.controller.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import Files_ICTLabSchedule from "../models/Files/file-ict-lab-sched.js";
+import Files_MaintenanceSchedule from "../models/Files/file-maintenance-sched.js";
+import Files_ICTLabUsersLogBook from "../models/Files/file-ict-lab-users-logbook.js";
+import Files_MonthlyMaintenanceReport from "../models/Files/file-monthly-maintenance-report.js";
 
 const router = express.Router();
 
@@ -61,5 +65,53 @@ router.get(
   authMiddleware,
   getFiles_MaintenanceSchedule
 );
+
+// Admin routes
+
+router.get("/files/ict-laboratory-schedule/:userId", async (req, res) => {
+  try {
+    const files = await Files_ICTLabSchedule.find({ owner: req.params.userId });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error("Error fetching user files:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/files/maintenance-schedule/:userId", async (req, res) => {
+  try {
+    const files = await Files_MaintenanceSchedule.find({
+      owner: req.params.userId,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error("Error fetching user files:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/files/ict-laboratory-users-log-book/:userId", async (req, res) => {
+  try {
+    const files = await Files_ICTLabUsersLogBook.find({
+      owner: req.params.userId,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error("Error fetching user files:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/files/monthly-maintenance-report/:userId", async (req, res) => {
+  try {
+    const files = await Files_MonthlyMaintenanceReport.find({
+      owner: req.params.userId,
+    });
+    res.status(200).json({ files });
+  } catch (error) {
+    console.error("Error fetching user files:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 export default router;

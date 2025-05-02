@@ -1,0 +1,15 @@
+.tagContainerDone {
+  font-family: "Poppins";
+  height: 25px;
+  background-color: #1be17e;
+  padding: 6px 10px 5px 10px;
+  justify-content: center;
+  border-radius: 10px;
+}
+.nocurrentfilText {
+  font-size: 12px;
+  color: white;
+  font-weight: 400;
+  text-align: center;
+  align-content: center;
+}
