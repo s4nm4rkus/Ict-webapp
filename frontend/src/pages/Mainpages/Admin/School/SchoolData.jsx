@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../../../components/Nav/navbar";
 import axios from "axios";
 import userIcon from "../../../../assets/Icons/user-ic.png";
@@ -14,8 +15,13 @@ import "./schooldata.css";
 function SchoolData() {
   const { userId } = useParams();
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate();
   const location = useLocation();
   const passedUser = location.state?.selectedUser;
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     const fetchSelectedUser = async () => {
@@ -62,10 +68,17 @@ function SchoolData() {
                       marginBottom: 0,
                     }}
                   >
-                    <i
-                      className="fas fa-arrow-left pe-3"
-                      style={{ fontSize: "26px", color: "#1B91E1" }}
-                    ></i>
+                    <button
+                      style={{
+                        border: 0,
+                        backgroundColor: "transparent",
+
+                        marginRight: 5,
+                      }}
+                      onClick={handleBack}
+                    >
+                      <i className="fas fa-arrow-left fs-6 editIcon"></i>
+                    </button>
                     <i
                       className="fa-solid fa-school pe-3"
                       style={{ fontSize: "28px", color: "#1e1e1e" }}

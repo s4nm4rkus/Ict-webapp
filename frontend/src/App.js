@@ -15,6 +15,8 @@ import AdminDashboard from "./pages/Mainpages/Admin/Admin Dashboard/AdminDashboa
 import SchoolData from "./pages/Mainpages/Admin/School/SchoolData.jsx";
 import SchoolFileListLS from "./pages/Mainpages/Admin/Files/ICT Laboratory Schedule/SchoolFileList.jsx";
 import SchoolFileListLULB from "./pages/Mainpages/Admin/Files/ICT Laboratory Users LogBook/SchoolFileList.jsx";
+import SchoolFileListMS from "./pages/Mainpages/Admin/Files/Maintenance Schedule/SchoolFileList.jsx";
+import SchoolFileListMMR from "./pages/Mainpages/Admin/Files/Monthly Maintenance Report/SchoolFileList.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
@@ -52,6 +54,8 @@ function App() {
         <Route path="/school-data/:id" element={<SchoolData />} />
         <Route path="/school-file-list-ls" element={<SchoolFileListLS />} />
         <Route path="/school-file-list-lulb" element={<SchoolFileListLULB />} />
+        <Route path="/school-file-list-ms" element={<SchoolFileListMS />} />
+        <Route path="/school-file-list-mmr" element={<SchoolFileListMMR />} />
         <Route path="/filelistLS" element={<FileListLS />} />
         <Route path="/filelistMMR" element={<FileListMMR />} />
         <Route path="/filelistLUL" element={<FileListLUL />} />

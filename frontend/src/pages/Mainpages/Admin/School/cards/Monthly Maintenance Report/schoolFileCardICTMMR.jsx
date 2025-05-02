@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import StatusFilesUpdated from "../../tags/Submitted/updated";
 import StatusNoCurrentFile from "../../tags/Empty/noCurrentFile";
 import fileIcon from "../../../../../../assets/Icons/file-ic.png";
@@ -7,6 +8,7 @@ import "./schoolfilecard.css";
 
 function SchoolFileCardMMR({ title, description, apiEndpoint, userId }) {
   const [files, setFiles] = useState([]);
+  const navigate = useNavigate();
   const currentDate = new Date();
   const currentMonthYear = `${
     currentDate.getMonth() + 1
@@ -66,6 +68,11 @@ function SchoolFileCardMMR({ title, description, apiEndpoint, userId }) {
               width: "160px",
               color: "white",
             }}
+            onClick={() =>
+              navigate("/school-file-list-mmr", {
+                state: { selectedUser: userId },
+              })
+            }
           >
             <p className="viewFileBtn">
               View Files
