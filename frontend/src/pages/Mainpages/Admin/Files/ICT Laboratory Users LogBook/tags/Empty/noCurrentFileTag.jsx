@@ -1,6 +1,6 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
-import "./outdatedfiles.css";
+import "./nocurrentfile.css";
 // import axios from "axios";
 
 function StatusNoCurrentFile() {

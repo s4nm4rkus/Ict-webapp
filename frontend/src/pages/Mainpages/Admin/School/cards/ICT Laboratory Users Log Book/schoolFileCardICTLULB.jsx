@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import StatusFilesUpdated from "../../tags/Submitted/updated";
 import StatusNoCurrentFile from "../../tags/Empty/noCurrentFile";
@@ -7,6 +8,7 @@ import "./schoolfilecard.css";
 
 function SchoolFileCardLULB({ title, description, apiEndpoint, userId }) {
   const [files, setFiles] = useState([]);
+  const navigate = useNavigate();
   const currentDate = new Date();
   const currentMonthYear = `${
     currentDate.getMonth() + 1
@@ -66,6 +68,11 @@ function SchoolFileCardLULB({ title, description, apiEndpoint, userId }) {
               width: "160px",
               color: "white",
             }}
+            onClick={() =>
+              navigate("/school-file-list-lulb", {
+                state: { selectedUser: userId },
+              })
+            }
           >
             <p className="viewFileBtn">
               View Files

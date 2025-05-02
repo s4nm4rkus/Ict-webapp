@@ -13,6 +13,8 @@ import FileListMS from "./pages/Mainpages/Files/Maintenance Schedule/fileList";
 
 import AdminDashboard from "./pages/Mainpages/Admin/Admin Dashboard/AdminDashboard.jsx";
 import SchoolData from "./pages/Mainpages/Admin/School/SchoolData.jsx";
+import SchoolFileListLS from "./pages/Mainpages/Admin/Files/ICT Laboratory Schedule/SchoolFileList.jsx";
+import SchoolFileListLULB from "./pages/Mainpages/Admin/Files/ICT Laboratory Users LogBook/SchoolFileList.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
@@ -48,6 +50,8 @@ function App() {
           }
         />
         <Route path="/school-data/:id" element={<SchoolData />} />
+        <Route path="/school-file-list-ls" element={<SchoolFileListLS />} />
+        <Route path="/school-file-list-lulb" element={<SchoolFileListLULB />} />
         <Route path="/filelistLS" element={<FileListLS />} />
         <Route path="/filelistMMR" element={<FileListMMR />} />
         <Route path="/filelistLUL" element={<FileListLUL />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
-import "./updatedfiles.css";
+import "./updated.css";
 // import axios from "axios";
 
 function StatusFilesUpdated() {
