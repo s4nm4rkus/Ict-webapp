@@ -2,6 +2,7 @@ import Files_ICTLabSchedule from "../models/Files/file-ict-lab-sched.js";
 import Files_MonthlyMaintenanceReport from "../models/Files/file-monthly-maintenance-report.js";
 import Files_ICTLabUsersLogbook from "../models/Files/file-ict-lab-users-logbook.js";
 import Files_MaintenanceSchedule from "../models/Files/file-maintenance-sched.js";
+import User from "../models/Users.js";
 
 export const uploadFile_ICTLabSchedule = async (req, res) => {
   try {
@@ -224,5 +225,52 @@ export const getFiles_MaintenanceSchedule = async (req, res) => {
     return res
       .status(500)
       .json({ error: "Database Error", details: error.message });
+  }
+};
+
+//summary reporting
+
+export const getAllGroupedFiles = async (req, res) => {
+  try {
+    // Fetch only users with role "user"
+    const users = await User.find({ role: "user" });
+
+    // For each user, fetch their files
+    const groupedData = await Promise.all(
+      users.map(async (user) => {
+        // Fetch files for this user
+        const [
+          ictLabSchedules,
+          ictLabUsersLogbooks,
+          maintenanceSchedules,
+          monthlyMaintenanceReports,
+        ] = await Promise.all([
+          Files_ICTLabSchedule.find({ owner: user._id }),
+          Files_ICTLabUsersLogbook.find({ owner: user._id }),
+          Files_MaintenanceSchedule.find({ owner: user._id }),
+          Files_MonthlyMaintenanceReport.find({ owner: user._id }),
+        ]);
+
+        // Combine the files into one array
+        const allFiles = [
+          ...ictLabSchedules,
+          ...ictLabUsersLogbooks,
+          ...maintenanceSchedules,
+          ...monthlyMaintenanceReports,
+        ];
+
+        // Return a grouped result including school and ictCoordinator details
+        return {
+          school: user.schoolName,
+          ictCoordinator: `${user.firstName} ${user.lastName}`,
+          files: allFiles,
+        };
+      })
+    );
+
+    res.json(groupedData);
+  } catch (error) {
+    console.error("❌ Error fetching grouped files:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

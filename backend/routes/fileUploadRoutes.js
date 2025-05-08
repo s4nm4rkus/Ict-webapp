@@ -9,7 +9,9 @@ import {
   getFiles_ICTLabUsersLogbook,
   uploadFile_MaintenanceSchedule,
   getFiles_MaintenanceSchedule,
+  getAllGroupedFiles,
 } from "../controllers/file.controller.js";
+
 import authMiddleware from "../middleware/authMiddleware.js";
 import Files_ICTLabSchedule from "../models/Files/file-ict-lab-sched.js";
 import Files_MaintenanceSchedule from "../models/Files/file-maintenance-sched.js";
@@ -113,5 +115,7 @@ router.get("/files/monthly-maintenance-report/:userId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.get("/admin/summary", authMiddleware, getAllGroupedFiles);
 
 export default router;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./admindashboard.css";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
+import ReportTable from "../Report Summary/ReportTable";
 
 function AdminDashboard() {
   const [user, setUser] = useState(null);
@@ -172,9 +173,7 @@ function AdminDashboard() {
 
               {activeTab === "report" && (
                 <div>
-                  {/* Report Summary Content */}
-                  <h2>Report Summary Tab Content</h2>
-                  <p>Summary Reports and Charts...</p>
+                  <ReportTable />
                 </div>
               )}
 

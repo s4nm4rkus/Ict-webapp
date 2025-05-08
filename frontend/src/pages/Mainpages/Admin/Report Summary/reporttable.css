@@ -1,0 +1,49 @@
+.table {
+  font-size: 16px;
+}
+.school {
+  font-size: 14px;
+  width: 300px;
+}
+.ict_coord {
+  font-size: 14px;
+  width: 250px;
+}
+.ict-lab-sched {
+  font-size: 14px;
+  width: 170px;
+}
+.maintenance-sched {
+  font-size: 14px;
+  width: 170px;
+}
+.monthly-maintenance-sched {
+  font-size: 14px;
+  width: 170px;
+}
+.ict-lab-users-log {
+  width: 170px;
+}
+.editIcon {
+  color: #fff;
+  background-color: #1b91e1;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.editIcon:hover {
+  opacity: 0.5;
+}
+
+.deleteIcon {
+  color: #fff;
+  background-color: #e7495c;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.2);
+}
+.deleteIcon:hover {
+  opacity: 0.5;
+}

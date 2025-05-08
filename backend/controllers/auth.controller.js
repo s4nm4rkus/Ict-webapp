@@ -121,11 +121,11 @@ exports.logout = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    // fetch everyone except their password
-    const users = await User.find().select("-password");
+    // Fetch only users with role "user" and exclude their password
+    const users = await User.find({ role: "user" }).select("-password");
     res.status(200).json({ users });
   } catch (err) {
-    console.error("❌ Error fetching all users:", err);
+    console.error("❌ Error fetching users with role 'user':", err);
     res.status(500).json({ msg: "Server error fetching users" });
   }
 };
