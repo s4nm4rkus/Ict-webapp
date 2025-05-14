@@ -79,7 +79,7 @@ function FileListMMR() {
     return fileMonthYear === currentMonthYear;
   });
 
-  const totalPages = Math.ceil(files.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedFiles.length / itemsPerPage);
 
   return (
     <>

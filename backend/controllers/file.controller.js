@@ -229,16 +229,180 @@ export const getFiles_MaintenanceSchedule = async (req, res) => {
 };
 
 //summary reporting
+// export const getAllGroupedFiles = async (req, res) => {
+//   try {
+//     const users = await User.find({ role: "user" });
+
+//     const groupedData = await Promise.all(
+//       users.map(async (user) => {
+//         const [
+//           ictLabSchedules,
+//           ictLabUsersLogbooks,
+//           maintenanceSchedules,
+//           monthlyMaintenanceReports,
+//         ] = await Promise.all([
+//           Files_ICTLabSchedule.find({ owner: user._id }),
+//           Files_ICTLabUsersLogbook.find({ owner: user._id }),
+//           Files_MaintenanceSchedule.find({ owner: user._id }),
+//           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
+//         ]);
+
+//         const groupByMonth = (files) => {
+//           const result = {};
+//           files.forEach((file) => {
+//             const month = new Date(file.timestamp).getMonth(); // Use .timestamp not .createdAt
+//             if (!result[month]) result[month] = [];
+//             result[month].push(file);
+//           });
+//           return result;
+//         };
+
+//         return {
+//           userId: user._id, // You wanted this
+//           school: user.schoolName,
+//           ictCoordinator: `${user.firstName} ${user.lastName}`,
+//           files: [
+//             ...ictLabSchedules,
+//             ...ictLabUsersLogbooks,
+//             ...maintenanceSchedules,
+//             ...monthlyMaintenanceReports,
+//           ],
+//           uploadsPerMonth: {
+//             logbook: groupByMonth(ictLabUsersLogbooks),
+//             maintenanceReport: groupByMonth(monthlyMaintenanceReports),
+//           },
+//         };
+//       })
+//     );
+
+//     res.json(groupedData);
+//   } catch (error) {
+//     console.error("❌ Error fetching grouped files:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+// export const getAllGroupedFiles = async (req, res) => {
+//   try {
+//     const users = await User.find({ role: "user" });
+//     const currentYear = new Date().getFullYear();
+
+//     const groupedData = await Promise.all(
+//       users.map(async (user) => {
+//         const [
+//           ictLabSchedules,
+//           ictLabUsersLogbooks,
+//           maintenanceSchedules,
+//           monthlyMaintenanceReports,
+//         ] = await Promise.all([
+//           Files_ICTLabSchedule.find({ owner: user._id }),
+//           Files_ICTLabUsersLogbook.find({ owner: user._id }),
+//           Files_MaintenanceSchedule.find({ owner: user._id }),
+//           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
+//         ]);
+
+//         const groupByMonth = (files) => {
+//           const result = {};
+//           files.forEach((file) => {
+//             const date = new Date(file.timestamp);
+//             const month = date.getMonth();
+//             const year = date.getFullYear();
+//             if (year !== currentYear) return;
+//             if (!result[month]) result[month] = [];
+//             result[month].push(file);
+//           });
+//           return result;
+//         };
+
+//         // Maintenance Schedule: Uploaded if there’s a file from June of current year
+//         const isMaintenanceScheduleUploaded = maintenanceSchedules.some(
+//           (file) => {
+//             const date = new Date(file.timestamp);
+//             return date.getFullYear() === currentYear && date.getMonth() === 5;
+//           }
+//         );
+
+//         // ICT Lab Schedule
+//         let isICTLabScheduleUploaded = false;
+//         let ictLabScheduleGrouped;
+
+//         if (user.level === "Elementary/JHS") {
+//           ictLabScheduleGrouped = ictLabSchedules.filter((file) => {
+//             const date = new Date(file.timestamp);
+//             return date.getFullYear() === currentYear && date.getMonth() === 5;
+//           });
+//           isICTLabScheduleUploaded = ictLabScheduleGrouped.length > 0;
+//         } else if (user.level === "Senior High School") {
+//           ictLabScheduleGrouped = {
+//             firstSemester: [],
+//             secondSemester: [],
+//           };
+
+//           ictLabSchedules.forEach((file) => {
+//             const date = new Date(file.timestamp);
+//             const month = date.getMonth();
+//             const year = date.getFullYear();
+//             if (year !== currentYear) return;
+
+//             if (month >= 5 && month <= 10) {
+//               ictLabScheduleGrouped.firstSemester.push(file);
+//             } else if (month === 11 || month <= 4) {
+//               ictLabScheduleGrouped.secondSemester.push(file);
+//             }
+//           });
+
+//           const currentMonth = new Date().getMonth();
+//           if (currentMonth >= 5 && currentMonth <= 10) {
+//             // June–Nov (First Sem)
+//             isICTLabScheduleUploaded =
+//               ictLabScheduleGrouped.firstSemester.length > 0;
+//           } else {
+//             // Dec–May (Second Sem)
+//             isICTLabScheduleUploaded =
+//               ictLabScheduleGrouped.secondSemester.length > 0;
+//           }
+//         }
+
+//         return {
+//           userId: user._id,
+//           school: user.schoolName,
+//           ictCoordinator: `${user.firstName} ${user.lastName}`,
+//           level: user.level,
+//           files: [
+//             ...ictLabSchedules,
+//             ...ictLabUsersLogbooks,
+//             ...maintenanceSchedules,
+//             ...monthlyMaintenanceReports,
+//           ],
+//           uploadsPerMonth: {
+//             logbook: groupByMonth(ictLabUsersLogbooks),
+//             maintenanceReport: groupByMonth(monthlyMaintenanceReports),
+//           },
+//           ictLabScheduleGrouped,
+//           maintenanceScheduleGrouped: maintenanceSchedules.filter((file) => {
+//             const date = new Date(file.timestamp);
+//             return date.getFullYear() === currentYear && date.getMonth() === 5;
+//           }),
+//           isICTLabScheduleUploaded,
+//           isMaintenanceScheduleUploaded,
+//         };
+//       })
+//     );
+
+//     res.json(groupedData);
+//   } catch (error) {
+//     console.error("❌ Error fetching grouped files:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 export const getAllGroupedFiles = async (req, res) => {
   try {
-    // Fetch only users with role "user"
     const users = await User.find({ role: "user" });
+    const currentYear = new Date().getFullYear();
 
-    // For each user, fetch their files
     const groupedData = await Promise.all(
       users.map(async (user) => {
-        // Fetch files for this user
         const [
           ictLabSchedules,
           ictLabUsersLogbooks,
@@ -251,26 +415,40 @@ export const getAllGroupedFiles = async (req, res) => {
           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
         ]);
 
-        // Combine the files into one array
-        const allFiles = [
-          ...ictLabSchedules,
-          ...ictLabUsersLogbooks,
-          ...maintenanceSchedules,
-          ...monthlyMaintenanceReports,
-        ];
+        const groupByMonth = (files) => {
+          const result = {};
+          files.forEach((file) => {
+            const date = new Date(file.timestamp);
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            if (year === currentYear) {
+              if (!result[month]) result[month] = [];
+              result[month].push(file);
+            }
+          });
+          return result;
+        };
 
-        // Return a grouped result including school and ictCoordinator details
         return {
-          school: user.schoolName,
+          userId: user._id,
+          school: user.schoolName || "Unknown",
           ictCoordinator: `${user.firstName} ${user.lastName}`,
-          files: allFiles,
+
+          uploads: {
+            ictLabSched: ictLabSchedules,
+            maintenanceSched: maintenanceSchedules,
+          },
+          uploadsPerMonth: {
+            logbook: groupByMonth(ictLabUsersLogbooks),
+            maintenanceReport: groupByMonth(monthlyMaintenanceReports),
+          },
         };
       })
     );
 
-    res.json(groupedData);
+    res.status(200).json(groupedData);
   } catch (error) {
-    console.error("❌ Error fetching grouped files:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error fetching grouped files:", error);
+    res.status(500).json({ message: "Server error while fetching data." });
   }
 };
