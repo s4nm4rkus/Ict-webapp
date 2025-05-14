@@ -178,7 +178,7 @@ function ReportTable() {
         </tbody>
       </table>
 
-      <div className="d-flex justify-content-between mt-4">
+      <div className="d-flex mt-4" style={{ justifyContent: "right" }}>
         <nav>
           <ul className="pagination">
             <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>

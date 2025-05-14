@@ -112,6 +112,9 @@ function AdminDashboard() {
                     </li>
                   </ul>
                 </div>
+                {/* <button className="addSchBtn">
+                  <i className="fa-solid fa-plus pe-2 mt-1"></i>Add school
+                </button> */}
               </div>
               <hr
                 style={{
@@ -156,13 +159,6 @@ function AdminDashboard() {
                           }}
                         ></i>
                         <p className="schoolName">{sch.schoolName}</p>
-                        {/* <p>
-                          <strong>Admin:</strong> {sch.firstName} {sch.lastName}
-                        </p>
-                        <p>
-                          <strong>Contact:</strong> {sch.contactNumber}
-                        </p> */}
-                        {/* Add any other fields you need */}
                       </div>
                     ))
                   ) : (

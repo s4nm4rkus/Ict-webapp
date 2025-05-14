@@ -60,25 +60,29 @@ function SchoolData() {
           <div className="mainContainer">
             <div className="upperContainer">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className="rightHomeHeader">
+                <div className="rightHomeHeader d-flex">
+                  <button
+                    style={{
+                      border: 0,
+                      backgroundColor: "transparent",
+                      marginRight: 10,
+                      marginBottom: 5,
+                    }}
+                    onClick={handleBack}
+                  >
+                    <i
+                      className="fas fa-arrow-left fs-6 editIcon"
+                      style={{ marginBottom: 0 }}
+                    ></i>
+                  </button>
                   <p
                     style={{
                       fontWeight: 600,
                       fontSize: "24px",
+                      marginTop: 5,
                       marginBottom: 0,
                     }}
                   >
-                    <button
-                      style={{
-                        border: 0,
-                        backgroundColor: "transparent",
-
-                        marginRight: 5,
-                      }}
-                      onClick={handleBack}
-                    >
-                      <i className="fas fa-arrow-left fs-6 editIcon"></i>
-                    </button>
                     <i
                       className="fa-solid fa-school pe-3"
                       style={{ fontSize: "28px", color: "#1e1e1e" }}

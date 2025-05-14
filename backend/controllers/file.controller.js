@@ -432,7 +432,9 @@ export const getAllGroupedFiles = async (req, res) => {
         return {
           userId: user._id,
           school: user.schoolName || "Unknown",
-          ictCoordinator: `${user.firstName} ${user.lastName}`,
+          ictCoordinator: `${user.firstName} ${
+            user.mInitial ? user.mInitial + "." : ""
+          } ${user.lastName}`,
 
           uploads: {
             ictLabSched: ictLabSchedules,

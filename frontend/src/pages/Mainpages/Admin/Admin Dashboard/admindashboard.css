@@ -82,3 +82,18 @@ a {
   padding-bottom: 20px;
   justify-self: right;
 }
+.addSchBtn {
+  border: 0;
+  background-color: #1b91e1;
+  font-size: 18px;
+  font-weight: 00;
+  color: #fff;
+  margin: 15px 0px 15px 15px;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: opacity 0.1s ease-in-out 0.07s;
+}
+.addSchBtn:hover {
+  opacity: 0.7;
+}

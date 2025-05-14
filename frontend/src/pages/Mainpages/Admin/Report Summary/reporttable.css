@@ -1,27 +1,28 @@
 .table {
-  font-size: 16px;
+  font-size: 12px;
 }
 .school {
-  font-size: 14px;
+  font-size: 12px;
   width: 300px;
 }
 .ict_coord {
-  font-size: 14px;
+  font-size: 12px;
   width: 250px;
 }
 .ict-lab-sched {
-  font-size: 14px;
+  font-size: 12px;
   width: 170px;
 }
 .maintenance-sched {
-  font-size: 14px;
+  font-size: 12px;
   width: 170px;
 }
 .monthly-maintenance-sched {
-  font-size: 14px;
+  font-size: 12px;
   width: 170px;
 }
 .ict-lab-users-log {
+  font-size: 12px;
   width: 170px;
 }
 .editIcon {
