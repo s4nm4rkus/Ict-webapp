@@ -15,7 +15,7 @@ import uploadRoutes from "./routes/fileUploadRoutes.js";
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://sdotayabas-ict-webapp.vercel.app/",
+    origin: "https://sdotayabas-ict-webapp.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
