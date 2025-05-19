@@ -19,7 +19,9 @@ function ReportTable() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/summary");
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/admin/summary`
+        );
         setFiles(res.data || []);
       } catch (err) {
         console.error("Failed to fetch grouped files:", err);

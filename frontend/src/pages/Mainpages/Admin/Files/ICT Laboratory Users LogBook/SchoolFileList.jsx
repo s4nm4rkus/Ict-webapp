@@ -27,7 +27,7 @@ function SchoolFileListLULB() {
       if (!userId) return;
       try {
         const res = await fetch(
-          `http://localhost:5000/api/files/ict-laboratory-users-log-book/${userId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-users-log-book/${userId}`,
           {
             method: "GET",
             headers: {

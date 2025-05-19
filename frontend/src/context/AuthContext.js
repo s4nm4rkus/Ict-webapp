@@ -12,7 +12,9 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        const res = await axios.get("http://localhost:5000/api/auth/me");
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/auth/me`
+        );
         setUser(res.data.user);
       } catch (error) {
         console.error("Failed to fetch user", error);
@@ -28,12 +30,15 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (firstName, lastName, email, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
@@ -46,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );

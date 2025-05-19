@@ -59,7 +59,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
       };
 
       const dbResponse = await fetch(
-        "http://localhost:5000/api/upload/maintenance-schedule",
+        `${process.env.REACT_APP_API_BASE_URL}/upload/maintenance-schedule`,
         {
           method: "POST",
           headers: {

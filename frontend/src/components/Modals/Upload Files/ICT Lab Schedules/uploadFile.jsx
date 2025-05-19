@@ -61,7 +61,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
       };
 
       const dbResponse = await fetch(
-        "http://localhost:5000/api/upload/ict-laboratory-schedule",
+        `${process.env.REACT_APP_API_BASE_URL}/upload/ict-laboratory-schedule`,
         {
           method: "POST",
           headers: {

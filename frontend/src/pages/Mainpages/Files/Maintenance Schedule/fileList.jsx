@@ -32,7 +32,7 @@ function FileListMS() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/files/maintenance-schedule",
+          `${process.env.REACT_APP_API_BASE_URL}/files/maintenance-schedule`,
           {
             method: "GET",
             headers: {
