@@ -32,7 +32,7 @@ function FileListLS() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/files/ict-laboratory-schedule",
+          `${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-schedule`,
           {
             method: "GET",
             headers: {

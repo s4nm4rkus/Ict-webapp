@@ -20,11 +20,14 @@ function Homepage() {
         const token = localStorage.getItem("token");
         console.log("Token:", token); // Debugging: Check if token exists
 
-        const { data } = await axios.get("http://localhost:5000/api/auth/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         console.log("Fetched User:", data); // Debugging: Check API response
 

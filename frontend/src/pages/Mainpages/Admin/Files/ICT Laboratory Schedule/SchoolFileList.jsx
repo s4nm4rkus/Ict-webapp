@@ -27,7 +27,7 @@ function SchoolFileListLS() {
       if (!userId) return;
       try {
         const res = await fetch(
-          `http://localhost:5000/api/files/ict-laboratory-schedule/${userId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-schedule/${userId}`,
           {
             method: "GET",
             headers: {
