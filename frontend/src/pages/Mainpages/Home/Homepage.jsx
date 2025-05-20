@@ -21,7 +21,7 @@ function Homepage() {
         console.log("Token:", token); // Debugging: Check if token exists
 
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

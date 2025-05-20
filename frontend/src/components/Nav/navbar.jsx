@@ -15,7 +15,7 @@ function Navbar() {
         console.log("Token:", token); // Debugging: Check if token exists
 
         const { data } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/logout`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`,
         {},
         { withCredentials: true }
       );

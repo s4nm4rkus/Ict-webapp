@@ -22,7 +22,7 @@ function CardFile() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/files/maintenance-schedule`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/maintenance-schedule`,
           {
             method: "GET",
             headers: {

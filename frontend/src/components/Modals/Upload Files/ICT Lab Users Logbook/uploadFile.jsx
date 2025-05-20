@@ -59,7 +59,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
       };
 
       const dbResponse = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/upload/ict-laboratory-users-logbook`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/upload/ict-laboratory-users-logbook`,
         {
           method: "POST",
           headers: {

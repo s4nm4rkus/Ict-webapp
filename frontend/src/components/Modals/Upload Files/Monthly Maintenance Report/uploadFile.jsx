@@ -59,7 +59,7 @@ function FileUploadModal({ show, handleClose, onFileUploaded }) {
       };
 
       const dbResponse = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/upload/monthly-maintenance-report`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/upload/monthly-maintenance-report`,
         {
           method: "POST",
           headers: {

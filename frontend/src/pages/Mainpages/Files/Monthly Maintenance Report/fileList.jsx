@@ -31,7 +31,7 @@ function FileListMMR() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/files/monthly-maintenance-report`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/monthly-maintenance-report`,
           {
             method: "GET",
             headers: {
