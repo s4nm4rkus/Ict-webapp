@@ -22,7 +22,7 @@ function AdminDashboard() {
 
         // Fetch logged-in user
         const { data: userData } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ function AdminDashboard() {
 
         // Fetch all users (schools)
         const { data: schoolsData } = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/auth/all`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

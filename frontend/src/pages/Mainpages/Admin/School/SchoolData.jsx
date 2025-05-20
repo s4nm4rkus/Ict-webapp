@@ -37,7 +37,7 @@ function SchoolData() {
         // Otherwise, fetch user by userId from the URL
         if (userId) {
           const { data } = await axios.get(
-            `${process.env.REACT_APP_API_BASE_URL}/auth/user/${userId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/auth/user/${userId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -120,26 +120,26 @@ function SchoolData() {
                 <SchoolFileCardICTLS
                   title="ICT Laboratory Schedule"
                   description="to be sent at the beginning of school year/semester"
-                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-schedule`}
+                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/api/files/ict-laboratory-schedule`}
                   userId={selectedUser?._id}
                 />
 
                 <SchoolFileCardMS
                   title="Maintenance Schedule"
                   description="to be sent at the beginning of school year"
-                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/files/maintenance-schedule`}
+                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/api/files/maintenance-schedule`}
                   userId={selectedUser?._id}
                 />
                 <SchoolFileCardLULB
                   title="ICT Laboratory Users Log Book"
                   description="to be sent monthly"
-                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-users-log-book`}
+                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/api/files/ict-laboratory-users-log-book`}
                   userId={selectedUser?._id}
                 />
                 <SchoolFileCardMMR
                   title="Monthly Maintenance Report"
                   description="to be sent monthly"
-                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/files/monthly-maintenance-report`}
+                  apiEndpoint={`${process.env.REACT_APP_API_BASE_URL}/api/files/monthly-maintenance-report`}
                   userId={selectedUser?._id}
                 />
               </div>

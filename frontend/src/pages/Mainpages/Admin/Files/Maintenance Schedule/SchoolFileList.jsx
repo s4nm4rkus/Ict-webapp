@@ -27,7 +27,7 @@ function SchoolFileListMS() {
       if (!userId) return;
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/files/maintenance-schedule/${userId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/maintenance-schedule/${userId}`,
           {
             method: "GET",
             headers: {

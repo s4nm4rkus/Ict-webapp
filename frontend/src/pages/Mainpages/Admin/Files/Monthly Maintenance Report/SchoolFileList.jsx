@@ -26,7 +26,7 @@ function SchoolFileListMMR() {
       if (!userId) return;
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/files/monthly-maintenance-report/${userId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/monthly-maintenance-report/${userId}`,
           {
             method: "GET",
             headers: {

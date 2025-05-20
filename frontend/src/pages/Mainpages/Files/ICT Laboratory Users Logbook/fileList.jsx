@@ -32,7 +32,7 @@ function FileListLUL() {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/files/ict-laboratory-users-logbook`,
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/ict-laboratory-users-logbook`,
           {
             method: "GET",
             headers: {

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       try {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         const res = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/auth/me`
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/me`
         );
         setUser(res.data.user);
       } catch (error) {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (firstName, lastName, email, password) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/auth/register`,
         {
           firstName,
           lastName,
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/auth/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );

@@ -20,7 +20,7 @@ function ReportTable() {
     const fetchFiles = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/admin/summary`
+          `${process.env.REACT_APP_API_BASE_URL}/api/admin/summary`
         );
         setFiles(res.data || []);
       } catch (err) {
