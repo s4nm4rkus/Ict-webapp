@@ -1,19 +1,23 @@
+//Importing file models and user model
 import Files_ICTLabSchedule from "../models/Files/file-ict-lab-sched.js";
 import Files_MonthlyMaintenanceReport from "../models/Files/file-monthly-maintenance-report.js";
 import Files_ICTLabUsersLogbook from "../models/Files/file-ict-lab-users-logbook.js";
 import Files_MaintenanceSchedule from "../models/Files/file-maintenance-sched.js";
 import User from "../models/Users.js";
 
+// ------------------ Upload ICT Lab Schedule File ------------------
 export const uploadFile_ICTLabSchedule = async (req, res) => {
   try {
+    // Destructure fields from request body
     const { title, description, level, timestamp, fileUrl, originalFileName } =
       req.body;
     const userId = req.user.id;
 
+    // Validate required fields
     if (!title || !description || !fileUrl || !originalFileName || !level) {
       return res.status(400).json({ error: "Missing required fields" });
     }
-
+    // Create and save a new file document in the database
     const newFile = new Files_ICTLabSchedule({
       title,
       description,
@@ -25,8 +29,9 @@ export const uploadFile_ICTLabSchedule = async (req, res) => {
     });
     await newFile.save();
 
+    // Log and return success response
     console.log("✅ File saved to database:", newFile);
-
+    // Handle and return database error
     return res
       .status(201)
       .json({ message: "File uploaded successfully", file: newFile });
@@ -39,16 +44,18 @@ export const uploadFile_ICTLabSchedule = async (req, res) => {
   }
 };
 
+// ------------------ Get ICT Lab Schedule Files (per user) ------------------
 export const getFiles_ICTLabSchedule = async (req, res) => {
   try {
-    const userId = req.user.id; // Get the current user ID from the middleware
-
+    // Get the current user ID from the middleware
+    const userId = req.user.id;
+    // Fetch files owned by the current user
     const files = await Files_ICTLabSchedule.find({ owner: userId });
-
+    // Return not found if empty
     if (!files.length) {
       return res.status(404).json({ message: "No files found for this user" });
     }
-
+    // Return found files
     return res
       .status(200)
       .json({ message: "Files fetched successfully", files });
@@ -60,6 +67,7 @@ export const getFiles_ICTLabSchedule = async (req, res) => {
   }
 };
 
+// ------------------ Upload Monthly Maintenance Report File ------------------
 export const uploadFile_MonthlyMaintenanceReport = async (req, res) => {
   try {
     const { title, description, timestamp, fileUrl, originalFileName } =
@@ -94,11 +102,10 @@ export const uploadFile_MonthlyMaintenanceReport = async (req, res) => {
   }
 };
 
+// ------------------ Get Monthly Maintenance Reports (per user) ------------------
 export const getFiles_MonthlyMaintenanceReport = async (req, res) => {
   try {
-    const userId = req.user.id; // Get the current user ID from the middleware
-
-    // Fetch files where the owner matches the current user ID
+    const userId = req.user.id;
     const files = await Files_MonthlyMaintenanceReport.find({ owner: userId });
 
     if (!files.length) {
@@ -116,6 +123,7 @@ export const getFiles_MonthlyMaintenanceReport = async (req, res) => {
   }
 };
 
+// ------------------ Upload ICT Lab Users Logbook File ------------------
 export const uploadFile_ICTLabUsersLogbook = async (req, res) => {
   try {
     const { title, description, timestamp, fileUrl, originalFileName } =
@@ -150,6 +158,7 @@ export const uploadFile_ICTLabUsersLogbook = async (req, res) => {
   }
 };
 
+// ------------------ Get ICT Lab Users Logbooks (per user) ------------------
 export const getFiles_ICTLabUsersLogbook = async (req, res) => {
   try {
     const userId = req.user.id; // Get the current user ID from the middleware
@@ -172,6 +181,7 @@ export const getFiles_ICTLabUsersLogbook = async (req, res) => {
   }
 };
 
+// ------------------ Upload Maintenance Schedule File ------------------
 export const uploadFile_MaintenanceSchedule = async (req, res) => {
   try {
     const { title, description, level, timestamp, fileUrl, originalFileName } =
@@ -205,12 +215,10 @@ export const uploadFile_MaintenanceSchedule = async (req, res) => {
       .json({ error: "Database Error", details: error.message });
   }
 };
-
+// ------------------  Get Maintenance Schedules (per user) ------------------
 export const getFiles_MaintenanceSchedule = async (req, res) => {
   try {
-    const userId = req.user.id; // Get the current user ID from the middleware
-
-    // Fetch files where the owner matches the current user ID
+    const userId = req.user.id;
     const files = await Files_MaintenanceSchedule.find({ owner: userId });
 
     if (!files.length) {
@@ -228,179 +236,17 @@ export const getFiles_MaintenanceSchedule = async (req, res) => {
   }
 };
 
-//summary reporting
-// export const getAllGroupedFiles = async (req, res) => {
-//   try {
-//     const users = await User.find({ role: "user" });
-
-//     const groupedData = await Promise.all(
-//       users.map(async (user) => {
-//         const [
-//           ictLabSchedules,
-//           ictLabUsersLogbooks,
-//           maintenanceSchedules,
-//           monthlyMaintenanceReports,
-//         ] = await Promise.all([
-//           Files_ICTLabSchedule.find({ owner: user._id }),
-//           Files_ICTLabUsersLogbook.find({ owner: user._id }),
-//           Files_MaintenanceSchedule.find({ owner: user._id }),
-//           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
-//         ]);
-
-//         const groupByMonth = (files) => {
-//           const result = {};
-//           files.forEach((file) => {
-//             const month = new Date(file.timestamp).getMonth(); // Use .timestamp not .createdAt
-//             if (!result[month]) result[month] = [];
-//             result[month].push(file);
-//           });
-//           return result;
-//         };
-
-//         return {
-//           userId: user._id, // You wanted this
-//           school: user.schoolName,
-//           ictCoordinator: `${user.firstName} ${user.lastName}`,
-//           files: [
-//             ...ictLabSchedules,
-//             ...ictLabUsersLogbooks,
-//             ...maintenanceSchedules,
-//             ...monthlyMaintenanceReports,
-//           ],
-//           uploadsPerMonth: {
-//             logbook: groupByMonth(ictLabUsersLogbooks),
-//             maintenanceReport: groupByMonth(monthlyMaintenanceReports),
-//           },
-//         };
-//       })
-//     );
-
-//     res.json(groupedData);
-//   } catch (error) {
-//     console.error("❌ Error fetching grouped files:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-// export const getAllGroupedFiles = async (req, res) => {
-//   try {
-//     const users = await User.find({ role: "user" });
-//     const currentYear = new Date().getFullYear();
-
-//     const groupedData = await Promise.all(
-//       users.map(async (user) => {
-//         const [
-//           ictLabSchedules,
-//           ictLabUsersLogbooks,
-//           maintenanceSchedules,
-//           monthlyMaintenanceReports,
-//         ] = await Promise.all([
-//           Files_ICTLabSchedule.find({ owner: user._id }),
-//           Files_ICTLabUsersLogbook.find({ owner: user._id }),
-//           Files_MaintenanceSchedule.find({ owner: user._id }),
-//           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
-//         ]);
-
-//         const groupByMonth = (files) => {
-//           const result = {};
-//           files.forEach((file) => {
-//             const date = new Date(file.timestamp);
-//             const month = date.getMonth();
-//             const year = date.getFullYear();
-//             if (year !== currentYear) return;
-//             if (!result[month]) result[month] = [];
-//             result[month].push(file);
-//           });
-//           return result;
-//         };
-
-//         // Maintenance Schedule: Uploaded if there’s a file from June of current year
-//         const isMaintenanceScheduleUploaded = maintenanceSchedules.some(
-//           (file) => {
-//             const date = new Date(file.timestamp);
-//             return date.getFullYear() === currentYear && date.getMonth() === 5;
-//           }
-//         );
-
-//         // ICT Lab Schedule
-//         let isICTLabScheduleUploaded = false;
-//         let ictLabScheduleGrouped;
-
-//         if (user.level === "Elementary/JHS") {
-//           ictLabScheduleGrouped = ictLabSchedules.filter((file) => {
-//             const date = new Date(file.timestamp);
-//             return date.getFullYear() === currentYear && date.getMonth() === 5;
-//           });
-//           isICTLabScheduleUploaded = ictLabScheduleGrouped.length > 0;
-//         } else if (user.level === "Senior High School") {
-//           ictLabScheduleGrouped = {
-//             firstSemester: [],
-//             secondSemester: [],
-//           };
-
-//           ictLabSchedules.forEach((file) => {
-//             const date = new Date(file.timestamp);
-//             const month = date.getMonth();
-//             const year = date.getFullYear();
-//             if (year !== currentYear) return;
-
-//             if (month >= 5 && month <= 10) {
-//               ictLabScheduleGrouped.firstSemester.push(file);
-//             } else if (month === 11 || month <= 4) {
-//               ictLabScheduleGrouped.secondSemester.push(file);
-//             }
-//           });
-
-//           const currentMonth = new Date().getMonth();
-//           if (currentMonth >= 5 && currentMonth <= 10) {
-//             // June–Nov (First Sem)
-//             isICTLabScheduleUploaded =
-//               ictLabScheduleGrouped.firstSemester.length > 0;
-//           } else {
-//             // Dec–May (Second Sem)
-//             isICTLabScheduleUploaded =
-//               ictLabScheduleGrouped.secondSemester.length > 0;
-//           }
-//         }
-
-//         return {
-//           userId: user._id,
-//           school: user.schoolName,
-//           ictCoordinator: `${user.firstName} ${user.lastName}`,
-//           level: user.level,
-//           files: [
-//             ...ictLabSchedules,
-//             ...ictLabUsersLogbooks,
-//             ...maintenanceSchedules,
-//             ...monthlyMaintenanceReports,
-//           ],
-//           uploadsPerMonth: {
-//             logbook: groupByMonth(ictLabUsersLogbooks),
-//             maintenanceReport: groupByMonth(monthlyMaintenanceReports),
-//           },
-//           ictLabScheduleGrouped,
-//           maintenanceScheduleGrouped: maintenanceSchedules.filter((file) => {
-//             const date = new Date(file.timestamp);
-//             return date.getFullYear() === currentYear && date.getMonth() === 5;
-//           }),
-//           isICTLabScheduleUploaded,
-//           isMaintenanceScheduleUploaded,
-//         };
-//       })
-//     );
-
-//     res.json(groupedData);
-//   } catch (error) {
-//     console.error("❌ Error fetching grouped files:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
+// ==============================
+// Get All Grouped Files by User
+// - Combines all uploads from all users with 'user' role
+// - Groups some file types by month for reporting
+// ==============================
 export const getAllGroupedFiles = async (req, res) => {
   try {
-    const users = await User.find({ role: "user" });
+    const users = await User.find({ role: "user" }); // Get all users with role "user"
     const currentYear = new Date().getFullYear();
 
+    // For each user, fetch associated files and group by month/year
     const groupedData = await Promise.all(
       users.map(async (user) => {
         const [
@@ -414,7 +260,7 @@ export const getAllGroupedFiles = async (req, res) => {
           Files_MaintenanceSchedule.find({ owner: user._id }),
           Files_MonthlyMaintenanceReport.find({ owner: user._id }),
         ]);
-
+        // Helper to group files by month if timestamp matches the current year
         const groupByMonth = (files) => {
           const result = {};
           files.forEach((file) => {
@@ -428,7 +274,7 @@ export const getAllGroupedFiles = async (req, res) => {
           });
           return result;
         };
-
+        // Return a structured object per user for frontend or reporting
         return {
           userId: user._id,
           school: user.schoolName || "Unknown",

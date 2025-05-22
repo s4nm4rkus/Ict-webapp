@@ -1,19 +1,24 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const User = require("../models/Users");
 
+// ------------------ LOGIN ------------------
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ msg: "Invalid credentials" });
     }
+    // Compare entered password with hashed password in DB
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ msg: "Invalid credentials" });
     }
+    // Generate JWT token upon successful login
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -21,7 +26,7 @@ exports.login = async (req, res) => {
         expiresIn: "1h",
       }
     );
-
+    // Send token and user info (excluding password)
     res.json({
       msg: "Login successful",
       token,
@@ -42,6 +47,7 @@ exports.login = async (req, res) => {
   }
 };
 
+// ------------------ REGISTER ------------------
 exports.register = async (req, res) => {
   const {
     email,
@@ -55,11 +61,12 @@ exports.register = async (req, res) => {
   } = req.body;
 
   try {
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
     }
-
+    // Create new user instance
     const newUser = new User({
       email,
       password,
@@ -68,11 +75,11 @@ exports.register = async (req, res) => {
       lastName,
       contactNumber,
       schoolName,
-      role: role || "user",
+      role: role || "user", // default role is "user"
     });
-
+    // Save new user to the database
     await newUser.save();
-
+    // Generate JWT token
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
       process.env.JWT_SECRET,
@@ -80,7 +87,7 @@ exports.register = async (req, res) => {
         expiresIn: "1h",
       }
     );
-
+    // Respond with token and user data (excluding password)
     res.status(201).json({
       msg: "User registered successfully",
       token,
@@ -101,9 +108,11 @@ exports.register = async (req, res) => {
   }
 };
 
+// ------------------ GET LOGGED-IN USER ------------------
 exports.getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password"); // Exclude password
+    // Get user from DB by ID, exclude password field
+    const user = await User.findById(req.user.id).select("-password");
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
@@ -113,6 +122,7 @@ exports.getMe = async (req, res) => {
   }
 };
 
+// ------------------ LOGOUT USER ------------------
 exports.logout = async (req, res) => {
   try {
     res.clearCookie("token");
@@ -123,6 +133,7 @@ exports.logout = async (req, res) => {
   }
 };
 
+// ------------------ GET ALL USERS WITH ROLE 'user' ------------------
 exports.getAllUsers = async (req, res) => {
   try {
     // Fetch only users with role "user" and exclude their password
@@ -134,21 +145,22 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// ------------------ GET USER BY ID ------------------
 exports.getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // Check if userId is valid
+    // Validate if userId is a valid MongoDB ObjectId
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ msg: "Invalid user ID" });
     }
 
-    // Proceed with the database query
+    // Fetch user by ID
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
-
+    // Return user data
     return res.json({ user });
   } catch (error) {
     console.error("Error fetching user:", error);

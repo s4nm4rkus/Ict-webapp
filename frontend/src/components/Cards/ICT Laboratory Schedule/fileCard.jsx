@@ -1,34 +1,58 @@
+// Import React and necessary hooks
 import React, { useState, useEffect } from "react";
+
+// Import Font Awesome for icons
 import "font-awesome/css/font-awesome.min.css";
+
+// Import CSS for styling the file card
 import "./file.card.css";
-// import axios from "axios";
+
+// Import React Router hook for navigation
 import { useNavigate } from "react-router-dom";
+
+// Import file icon image
 import fileIcon from "../../../assets/Icons/file-ic.png";
+
+// Import tag components for status display (either no file or files updated)
 import StatusNoCurrentFile from "../../Tags/Empty/noCurrentFile";
 import StatusFilesUpdated from "../../../components/Tags/Submitted/updated";
 
+/**
+ * This component displays a card for the ICT Laboratory Schedule files.
+ * It fetches the file list from the backend, filters the files based on the
+ * current month/semester, and displays a view files button.
+ */
 function CardFile() {
-  const navigate = useNavigate();
-  const [files, setFiles] = useState([]);
+  const navigate = useNavigate(); // Hook to programmatically navigate to other routes
+  const [files, setFiles] = useState([]); // State to store fetched files
+
+  // Get the current month and year to help filter file timestamps
   const currentDate = new Date();
   const currentMonthYear = `${
     currentDate.getMonth() + 1
   }-${currentDate.getFullYear()}`;
 
+  /**
+   * Handles navigation to the File List page when the "View Files" button is clicked.
+   */
   const handleViewFiles = () => {
-    navigate("/filelistLS"); // Navigate to FileList page
+    navigate("/filelistLS");
   };
 
+  /**
+   * Fetches files from the API when the component mounts.
+   * Uses bearer token from localStorage for authorization.
+   */
   useEffect(() => {
     const fetchFiles = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/files/ict-laboratory-schedule",
+          `${process.env.REACT_APP_API_BASE_URL}/api/files/ict-laboratory-schedule`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // Send token for authentication
             },
           }
         );
@@ -47,6 +71,11 @@ function CardFile() {
     fetchFiles();
   }, []);
 
+  /**
+   * Filters the fetched files to show only those that are:
+   * - From June of the current year
+   * - OR from the same semester and year as the current date
+   */
   const filteredFiles = files.filter((file) => {
     const fileDate = new Date(file.timestamp);
     const fileMonth = fileDate.getMonth() + 1; // JS months are 0-based
@@ -55,10 +84,10 @@ function CardFile() {
     const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
 
-    // ✅ Condition 1: File is from June (6) of current year
+    // Condition 1: File is from June (6) of current year
     const isJuneCurrentYear = fileMonth === 6 && fileYear === currentYear;
 
-    // ✅ Condition 2: File is from the same semester and year
+    // Condition 2: File is from the same semester and year
     let isSameSemester = false;
 
     // Check if both file and current date are in 1st semester
@@ -81,6 +110,13 @@ function CardFile() {
     return isJuneCurrentYear || isSameSemester;
   });
 
+  /**
+   * Renders the ICT Laboratory Schedule card, including:
+   * - Icon and title
+   * - File status tag (updated or no file)
+   * - Subtitle
+   * - View Files button
+   */
   return (
     <div className="cardContainer">
       <div className="cardContent">
