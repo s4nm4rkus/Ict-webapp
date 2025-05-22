@@ -1,3 +1,21 @@
+/**
+ * =========================================================
+ * Server Entry Point (Express Backend)
+ * ---------------------------------------------------------
+ * Purpose:
+ * - Initializes Express application
+ * - Connects to MongoDB using Mongoose
+ * - Configures middleware (CORS, JSON parsing)
+ * - Mounts API route handlers for:
+ *   - Authentication (`/api/auth`)
+ *   - File Upload and Retrieval (`/api`)
+ *
+ * Notes:
+ * - Uses environment variables from `.env` (via dotenv)
+ * - CORS is configured to allow frontend hosted on Vercel
+ * =========================================================
+ */
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -22,6 +40,7 @@ app.use(
   })
 );
 
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -29,14 +48,14 @@ mongoose
   })
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((error) => console.error("❌ Error connecting to MongoDB:", error));
-
-app.use("/api/auth", authRoutes); // Corrected route usage
+// API Routes
+app.use("/api/auth", authRoutes);
 app.use("/api", uploadRoutes);
-
+// Base route
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
-
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

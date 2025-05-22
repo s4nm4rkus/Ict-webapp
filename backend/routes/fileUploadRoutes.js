@@ -1,3 +1,47 @@
+/**
+ * =========================================================
+ * File Upload & Retrieval Routes
+ * ---------------------------------------------------------
+ * This router handles uploading and retrieving files related
+ * to the ICT Laboratory system. It separates routes for:
+ * - ICT Laboratory Schedules
+ * - Monthly Maintenance Reports
+ * - ICT Laboratory Users Logbooks
+ * - Maintenance Schedules
+ *
+ * Purpose:
+ * - Allow authenticated users to upload and retrieve documents
+ * - Enable admins to fetch files by specific user ID
+ * - Provide grouped summaries of uploaded files
+ *
+ * Routes:
+ * -------------------------
+ * USER ROUTES (requires authentication)
+ * POST /upload/ict-laboratory-schedule
+ * GET  /files/ict-laboratory-schedule
+ *
+ * POST /upload/monthly-maintenance-report
+ * GET  /files/monthly-maintenance-report
+ *
+ * POST /upload/ict-laboratory-users-logbook
+ * GET  /files/ict-laboratory-users-logbook
+ *
+ * POST /upload/maintenance-schedule
+ * GET  /files/maintenance-schedule
+ *
+ * -------------------------
+ * ADMIN ROUTES (fetch by userId)
+ * GET /files/ict-laboratory-schedule/:userId
+ * GET /files/maintenance-schedule/:userId
+ * GET /files/ict-laboratory-users-log-book/:userId
+ * GET /files/monthly-maintenance-report/:userId
+ *
+ * -------------------------
+ * SUMMARY ROUTE
+ * GET /admin/summary → Returns grouped summary of all uploaded files
+ * =========================================================
+ */
+
 import express from "express";
 import mongoose from "mongoose";
 import {
@@ -20,6 +64,7 @@ import Files_MonthlyMaintenanceReport from "../models/Files/file-monthly-mainten
 
 const router = express.Router();
 
+// USER ROUTES (Upload + Get files)
 router.post(
   "/upload/ict-laboratory-schedule",
   authMiddleware,
@@ -68,8 +113,7 @@ router.get(
   getFiles_MaintenanceSchedule
 );
 
-// Admin routes
-
+// ADMIN ROUTES (Fetch user files by user ID)
 router.get("/files/ict-laboratory-schedule/:userId", async (req, res) => {
   try {
     const files = await Files_ICTLabSchedule.find({ owner: req.params.userId });
@@ -116,6 +160,7 @@ router.get("/files/monthly-maintenance-report/:userId", async (req, res) => {
   }
 });
 
+// Summary route for admin
 router.get("/admin/summary", authMiddleware, getAllGroupedFiles);
 
 export default router;
