@@ -3,23 +3,28 @@
   width: 100%;
   position: absolute;
   top: 0;
-  margin-bottom: 5rem;
+  background-color: #222831;
 }
 
 .navItems {
   display: flex;
   justify-content: space-between;
-  padding: 50px 200px 0px 200px;
+  padding: 20px 200px 0px 200px;
 }
 
 .logoNav {
-  margin-top: -20px;
+  color: white;
+  margin-top: -2px;
   font-weight: 800;
-  font-size: 3.5rem;
+  font-size: 2rem;
 }
 .newNavItems {
+  justify-content: center;
+  color: white;
+  margin-top: 8px;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 .rightNav {
@@ -28,7 +33,6 @@
 
 .logoutButton {
   background-color: "#fff";
-  margin-left: 30px;
   transition: opacity 0.1s ease-in-out 0.1s;
 }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "./file.card.css";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import fileIcon from "../../../assets/Icons/file-ic.png";
 import StatusNoCurrentFile from "../../Tags/Empty/noCurrentFile";
@@ -16,7 +15,7 @@ function CardFile() {
   }-${currentDate.getFullYear()}`;
 
   const handleViewFiles = () => {
-    navigate("/filelistLUL"); // Navigate to FileList page
+    navigate("/filelistLUL");
   };
 
   useEffect(() => {

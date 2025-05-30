@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "font-awesome/css/font-awesome.min.css";
-import "./navbar.css";
+import "./adminnavbar.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -58,10 +58,41 @@ function Navbar() {
   };
 
   return (
-    <div className="navContainer">
+    <div className="navContainer" style={{ position: "fixed", zIndex: 1 }}>
       <div className="navItems">
         <p className="logoNav"> ICT Unit </p>
-        <div className="rightNav">
+        <p className="newNavItems"> Home </p>
+        <p className="newNavItems"> Forms </p>
+        <p className="newNavItems"> Schools </p>
+        <button
+          onClick={handleLogout}
+          className="logoutButton"
+          style={{
+            border: "none",
+            borderRadius: 8,
+            paddingTop: 8,
+            paddingBottom: 8,
+            paddingRight: 13,
+            paddingLeft: 13,
+            marginBottom: 20,
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "20px",
+              fontWeight: "400",
+              color: "#222831",
+              paddingRight: "25px",
+              paddingLeft: "25px",
+              textTransform: "uppercase",
+            }}
+          >
+            Logout
+            <i className="fas fa-sign-out-alt ps-3"></i>
+          </p>
+        </button>
+        {/* <div className="rightNav">
           {user ? (
             <>
               <p
@@ -70,36 +101,11 @@ function Navbar() {
                 <i className="fa-solid fa-user pe-3"></i>
                 {user.firstName} {""} {user.lastName}
               </p>
-              <button
-                onClick={handleLogout}
-                className="logoutButton"
-                style={{
-                  height: "55px",
-                  marginTop: "-12px",
-                  paddingRight: "25px",
-                  paddingLeft: "25px",
-                  border: "none",
-                  borderRadius: 8,
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "22px",
-                    fontWeight: "400",
-                    padding: 0,
-                    marginTop: "9px",
-                    color: "#1b91e1",
-                  }}
-                >
-                  Logout
-                  <i className="fas fa-sign-out-alt ps-3"></i>
-                </p>
-              </button>
             </>
           ) : (
             <p style={{ fontSize: "22px", color: "#fff" }}></p>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

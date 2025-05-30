@@ -11,7 +11,7 @@ import FileListMS from "./pages/Mainpages/Files/Maintenance Schedule/fileList";
 
 // Admin
 
-import AdminDashboard from "./pages/Mainpages/Admin/Admin Dashboard/AdminDashboard.jsx";
+import AdminNewDashboard from "./pages/Mainpages/Admin/Admin Updated Dashboard/AdminNewDashboard.jsx";
 import SchoolData from "./pages/Mainpages/Admin/School/SchoolData.jsx";
 import SchoolFileListLS from "./pages/Mainpages/Admin/Files/ICT Laboratory Schedule/SchoolFileList.jsx";
 import SchoolFileListLULB from "./pages/Mainpages/Admin/Files/ICT Laboratory Users LogBook/SchoolFileList.jsx";
@@ -21,6 +21,7 @@ import SchoolFileListMMR from "./pages/Mainpages/Admin/Files/Monthly Maintenance
 import "bootstrap/dist/css/bootstrap.min.css";
 import bgBottomImage from "./assets/Backgrounds/bgBottom.svg";
 import bgTopImage from "./assets/Backgrounds/bgTop.svg";
+import Navbar from "./components/Admin Side Navbar/adminnavbar.jsx";
 
 import "./App.css";
 
@@ -33,12 +34,12 @@ const PrivateRoute = ({ element }) => {
 function App() {
   return (
     <div className="App">
-      <img className="image_bgTop" src={bgTopImage} alt="Background-image" />
+      {/* <img className="image_bgTop" src={bgTopImage} alt="Background-image" />
       <img
         className="image_bgBottom"
         src={bgBottomImage}
         alt="Background-image"
-      />
+      /> */}
 
       <Routes>
         <Route path="/home" element={<PrivateRoute element={<Homepage />} />} />
@@ -46,7 +47,7 @@ function App() {
           path="/admin"
           element={
             <PrivateRoute
-              element={<AdminDashboard />}
+              element={<AdminNewDashboard />}
               allowedRoles={["admin"]}
             />
           }
